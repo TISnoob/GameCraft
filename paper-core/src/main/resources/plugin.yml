@@ -1,0 +1,20 @@
+name: GameCraft
+version: '${version}'
+main: io.github.tis199.gamecraft.paper.GameCraftPlugin
+api-version: '1.20'
+folia-supported: true
+description: Core lobby platform for GameCraft modules.
+authors: [TIS199]
+softdepend: [PlaceholderAPI]
+commands:
+  gamecraft:
+    description: GameCraft core and module administration.
+    usage: /gamecraft <status|reload|modules|furniture|sit|stand>
+    aliases: [gc]
+permissions:
+  gamecraft.use:
+    description: Use GameCraft player features.
+    default: true
+  gamecraft.admin:
+    description: Administer the GameCraft core and modules.
+    default: op

@@ -1,0 +1,63 @@
+config-version: 1
+
+modules:
+  # The release registry lists published downloadable game modules. No modules ship with this core release.
+  manifest-url: https://raw.githubusercontent.com/TIS199/GameCraft/main/modules/manifest.json
+  enabled-games: []
+  check-for-updates: true
+
+storage:
+  # Use mariadb for shared network data behind a proxy.
+  type: sqlite
+  sqlite-file: gamecraft.db
+  mariadb:
+    host: 127.0.0.1
+    port: 3306
+    database: gamecraft
+    username: gamecraft
+    password: ""
+    use-ssl: false
+
+ai:
+  enabled: false
+  provider: gemini
+  timeout-seconds: 45
+  providers:
+    gemini:
+      api-key: ""
+      api-key-env: GAMECRAFT_GEMINI_API_KEY
+      model: gemini-2.5-flash
+    groq:
+      api-key: ""
+      api-key-env: GAMECRAFT_GROQ_API_KEY
+      model: openai/gpt-oss-20b
+    openai:
+      api-key: ""
+      api-key-env: GAMECRAFT_OPENAI_API_KEY
+      model: gpt-4o-mini
+    anthropic:
+      api-key: ""
+      api-key-env: GAMECRAFT_ANTHROPIC_API_KEY
+      model: claude-3-5-haiku-latest
+    xai:
+      api-key: ""
+      api-key-env: GAMECRAFT_XAI_API_KEY
+      model: grok-3-mini
+    openrouter:
+      api-key: ""
+      api-key-env: GAMECRAFT_OPENROUTER_API_KEY
+      model: openai/gpt-4o-mini
+
+resource-pack:
+  enabled: false
+  required: false
+  java-url: ""
+  java-sha1: ""
+
+proxy:
+  # Set to velocity or bungeecord on backend servers that use a companion.
+  type: none
+
+messages:
+  prefix: "<gold>[GameCraft]</gold> "
+  no-games: "No game modules are installed yet. See the game developer guide to create one."

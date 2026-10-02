@@ -1,0 +1,21 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "GameCraft Core",
+    "description": "Core resource pack for the GameCraft lobby plugin",
+    "uuid": "0fe9e1f9-cb0f-4a78-8e94-5a2450a4c18a",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 20, 0]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "d7fd0dc8-8d42-49c5-b18a-d9e6c16779c4",
+      "version": [1, 0, 0]
+    }
+  ],
+  "metadata": {
+    "authors": ["GameCraft"],
+    "license": "MIT"
+  }
+}
