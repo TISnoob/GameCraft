@@ -51,8 +51,15 @@ public final class SolitaireModule extends AbstractGameModule {
             } else if (choice.startsWith("select:")) {
                 String[] parts = choice.split(":");
                 if (parts.length != 3) return;
-                board.selectedColumn = Integer.parseInt(parts[1]);
-                board.selectedIndex = Integer.parseInt(parts[2]);
+                board.selectedColumn = parse(parts[1], 0);
+                board.selectedIndex = parse(parts[2], 0);
+                if (board.selectedColumn < 0 || board.selectedColumn >= 7
+                        || board.selectedIndex < board.faceUpStart[board.selectedColumn]
+                        || board.selectedIndex >= board.columns.get(board.selectedColumn).size()
+                        || !isValidRun(board.columns.get(board.selectedColumn), board.selectedIndex)) {
+                    board.selectedColumn = -2;
+                    return;
+                }
                 showTargets(session, board, action.playerId());
                 return;
             } else if (choice.startsWith("wt:")) {
@@ -65,9 +72,10 @@ public final class SolitaireModule extends AbstractGameModule {
                 board.foundations.get(suit).add(board.waste.remove(board.waste.size() - 1));
             } else if (choice.startsWith("tf:")) {
                 int column = parse(choice, 1);
+                if (column < 0 || column >= 7) return;
                 List<Card> pile = board.columns.get(column);
                 Card card = top(pile);
-                if (!canMoveToFoundation(card, card.suit, board)) return;
+                if (card == null || !canMoveToFoundation(card, card.suit, board)) return;
                 pile.remove(pile.size() - 1);
                 board.foundations.get(card.suit).add(card);
                 reveal(column, board);
@@ -76,7 +84,8 @@ public final class SolitaireModule extends AbstractGameModule {
                 if (board.selectedColumn < 0 || target < 0 || target >= 7) return;
                 List<Card> source = board.columns.get(board.selectedColumn);
                 if (board.selectedIndex < board.faceUpStart[board.selectedColumn]
-                        || board.selectedIndex >= source.size()) return;
+                        || board.selectedIndex >= source.size()
+                        || !isValidRun(source, board.selectedIndex)) return;
                 Card moving = source.get(board.selectedIndex);
                 if (!canMoveToColumn(moving, target, board)) return;
                 List<Card> run = new ArrayList<>(source.subList(board.selectedIndex, source.size()));
@@ -137,7 +146,9 @@ public final class SolitaireModule extends AbstractGameModule {
         List<MenuOption> options = new ArrayList<>();
         Card card = board.columns.get(board.selectedColumn).get(board.selectedIndex);
         for (int target = 0; target < 7; target++) {
-            if (target != board.selectedColumn && canMoveToColumn(card, target, board)) {
+            if (target != board.selectedColumn
+                    && isValidRun(board.columns.get(board.selectedColumn), board.selectedIndex)
+                    && canMoveToColumn(card, target, board)) {
                 options.add(new MenuOption("to:" + target, "Move to column " + (target + 1), List.of()));
             }
         }
@@ -158,6 +169,16 @@ public final class SolitaireModule extends AbstractGameModule {
         List<Card> pile = board.columns.get(target);
         return pile.isEmpty() ? card.rank == 13
                 : card.color() != top(pile).color() && card.rank == top(pile).rank - 1;
+    }
+
+    private static boolean isValidRun(List<Card> source, int start) {
+        if (start < 0 || start >= source.size()) return false;
+        for (int index = start + 1; index < source.size(); index++) {
+            Card previous = source.get(index - 1);
+            Card current = source.get(index);
+            if (current.color() == previous.color() || current.rank != previous.rank - 1) return false;
+        }
+        return true;
     }
 
     private static boolean canMoveToFoundation(Card card, int suit, Board board) {

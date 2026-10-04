@@ -39,6 +39,17 @@ public final class GameBoardRenderer {
 
     private GameBoardRenderer() { }
 
+    public static void clearSession(UUID sessionId) {
+        ACTIVE_VISUALS.remove(sessionId);
+        String prefix = sessionId + "/";
+        MOTIONS.keySet().removeIf(key -> key.startsWith(prefix));
+    }
+
+    public static void clearAll() {
+        MOTIONS.clear();
+        ACTIVE_VISUALS.clear();
+    }
+
     public static void render(LevelRenderContext context) {
         PoseStack matrices = context.poseStack();
         Minecraft client = Minecraft.getInstance();
@@ -320,6 +331,9 @@ public final class GameBoardRenderer {
     private static void addLudo(GameSceneState scene, GameOption status, List<Visual> out, double y) {
         if (status == null) return;
         String[] colors = {"ludo-red", "ludo-yellow", "ludo-blue", "ludo-green"};
+        int totalSeats = Math.max(2, (int) status.description().stream()
+                .filter(line -> line.matches("(?:>\\s*)?(Red|Yellow|Blue|Green)(?:\\s+•[^:]*)?:.*"))
+                .count());
         for (String line : status.description()) {
             Matcher seat = Pattern.compile("(?:>\\s*)?(Red|Yellow|Blue|Green)(?:\\s+•[^:]*)?:\\s*(.*)", Pattern.CASE_INSENSITIVE).matcher(line);
             if (!seat.matches()) continue;
@@ -340,7 +354,7 @@ public final class GameBoardRenderer {
                     int progress;
                     try { progress = Integer.parseInt(value); } catch (NumberFormatException ignored) { continue; }
                     if (progress >= 56) continue;
-                    int track = Math.floorMod(player * 13 + progress, 52);
+                    int track = Math.floorMod(player * 52 / totalSeats + progress, 52);
                     double angle = track * Math.PI * 2 / 52.0 - Math.PI / 2;
                     double radius = progress >= 52 ? 0.45 : 1.88;
                     x = Math.cos(angle) * radius;

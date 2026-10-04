@@ -1,5 +1,6 @@
 plugins {
     base
+    id("com.gradleup.shadow") version "9.3.1" apply false
 }
 
 group = "io.github.tis199.gamecraft"
@@ -70,11 +71,6 @@ tasks.register<Sync>("assembleClientMods") {
     description = "Builds all version-specific GameCraft Fabric client mods into build/client-mods."
     dependsOn(clientModTasks)
     into(layout.buildDirectory.dir("client-mods"))
-    clientModTargets.forEach { mc ->
-        from(project(":client-mods:fabric-$mc").layout.buildDirectory.dir("libs")) {
-            include("gamecraft-client-$mc-*.jar")
-        }
-    }
 }
 
 tasks.register<Sync>("assembleDistribution") {
@@ -89,11 +85,6 @@ tasks.register<Sync>("assembleDistribution") {
     from(project(":proxy-velocity").layout.buildDirectory.file("libs/gc-velocity.jar"))
     from(project(":proxy-bungeecord").layout.buildDirectory.file("libs/gc-bungeecord.jar"))
     from(project(":geyser-addon").layout.buildDirectory.file("libs/gc-geyser-addon.jar"))
-    clientModTargets.forEach { mc ->
-        from(project(":client-mods:fabric-$mc").layout.buildDirectory.dir("libs")) {
-            include("gamecraft-client-$mc-*.jar")
-        }
-    }
     from(project(":games:gc-chess").layout.buildDirectory.file("libs/chess.jar"))
     from(project(":games:gc-ludo").layout.buildDirectory.file("libs/ludo.jar"))
     from(project(":games:gc-chinese-checkers").layout.buildDirectory.file("libs/chinese-checkers.jar"))
@@ -110,4 +101,23 @@ tasks.register<Sync>("assembleDistribution") {
 
 tasks.named("build") {
     dependsOn("assembleDistribution")
+}
+
+// Resolve the version-specific archive tasks only after Loom has created them. Using the
+// task outputs instead of the whole libs directory prevents sources JARs and avoids Gradle
+// treating unrelated directory-producing tasks as implicit inputs to the distribution copy.
+gradle.projectsEvaluated {
+    val clientArtifactTasks = clientModTargets.map { mc ->
+        val clientProject = project(":client-mods:fabric-$mc")
+        clientProject.tasks.getByName(if (mc.startsWith("26.")) "jar" else "remapJar")
+    }
+
+    tasks.named<Sync>("assembleClientMods") {
+        dependsOn(clientArtifactTasks)
+        clientArtifactTasks.forEach { from(it.outputs.files) }
+    }
+    tasks.named<Sync>("assembleDistribution") {
+        dependsOn(clientArtifactTasks)
+        clientArtifactTasks.forEach { from(it.outputs.files) }
+    }
 }

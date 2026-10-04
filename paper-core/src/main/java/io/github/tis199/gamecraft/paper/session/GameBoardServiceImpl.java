@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
@@ -40,6 +41,7 @@ public final class GameBoardServiceImpl implements GameBoardService, PluginMessa
     private final Map<UUID, Snapshot> privateHands = new ConcurrentHashMap<>();
     private final Set<UUID> moddedClients = ConcurrentHashMap.newKeySet();
     private final Map<UUID, Long> lastActionNanos = new ConcurrentHashMap<>();
+    private final Map<UUID, SyncCell> sceneSyncCells = new ConcurrentHashMap<>();
 
     public GameBoardServiceImpl(GameCraftPlugin plugin, GameSessionManagerImpl sessions, PaperScheduler scheduler) {
         this.plugin = plugin;
@@ -68,6 +70,7 @@ public final class GameBoardServiceImpl implements GameBoardService, PluginMessa
         Snapshot snapshot = new Snapshot(session.sessionId(), session.moduleId(), session.origin(), privatePlayerId, title,
                 actionType, List.copyOf(options), "");
         activeScenes.put(session.sessionId(), snapshot);
+        privateHands.entrySet().removeIf(entry -> entry.getValue().sessionId().equals(session.sessionId()));
         if ("uno".equals(session.moduleId()) && privatePlayerId != null
                 && options.stream().anyMatch(option -> option.id().startsWith("play:") || option.id().startsWith("hand:"))) {
             privateHands.put(privatePlayerId, snapshot);
@@ -104,7 +107,7 @@ public final class GameBoardServiceImpl implements GameBoardService, PluginMessa
                 if (!moddedClients.contains(viewerId)) continue;
                 scheduler.runForEntity(viewerId, () -> {
                     Player current = Bukkit.getPlayer(viewerId);
-                    if (current != null && canView(current, snapshot.origin())) send(current, SCENE_CHANNEL, payload);
+                    if (current != null) send(current, SCENE_CHANNEL, payload);
                 }, () -> { });
             }
         });
@@ -119,6 +122,7 @@ public final class GameBoardServiceImpl implements GameBoardService, PluginMessa
             String kind = packet.get("kind").getAsString();
             if (kind.equals("hello")) {
                 moddedClients.add(player.getUniqueId());
+                sceneSyncCells.put(player.getUniqueId(), syncCell(player));
                 acknowledge(player);
                 syncVisibleScenes(player);
                 plugin.furniture().sync(player);
@@ -268,11 +272,38 @@ public final class GameBoardServiceImpl implements GameBoardService, PluginMessa
                                 .toString()));
     }
 
+    @EventHandler(ignoreCancelled = true)
+    public void onViewerMove(PlayerMoveEvent event) {
+        if (event.getTo() == null) return;
+        if (event.getFrom().getWorld().equals(event.getTo().getWorld())
+                && (event.getFrom().getBlockX() >> 4) == (event.getTo().getBlockX() >> 4)
+                && (event.getFrom().getBlockZ() >> 4) == (event.getTo().getBlockZ() >> 4)) return;
+
+        Player player = event.getPlayer();
+        UUID playerId = player.getUniqueId();
+        if (!moddedClients.contains(playerId)) return;
+        SyncCell next = syncCell(player);
+        SyncCell previous = sceneSyncCells.put(playerId, next);
+        if (next.equals(previous)) return;
+
+        scheduler.runForEntity(playerId, () -> {
+            Player current = Bukkit.getPlayer(playerId);
+            if (current == null || !current.isOnline()) return;
+            for (Snapshot snapshot : activeScenes.values()) {
+                if (!snapshot.worldKey().isBlank() && !canView(current, snapshot.origin())) {
+                    sendClear(current, snapshot.sessionId());
+                }
+            }
+            syncVisibleScenes(current);
+        }, () -> { });
+    }
+
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         UUID id = event.getPlayer().getUniqueId();
         moddedClients.remove(id);
         lastActionNanos.remove(id);
+        sceneSyncCells.remove(id);
     }
 
     private Snapshot resolveWorld(Snapshot snapshot) {
@@ -293,6 +324,21 @@ public final class GameBoardServiceImpl implements GameBoardService, PluginMessa
         }, () -> { });
     }
 
+    private void sendClear(Player player, UUID sessionId) {
+        JsonObject packet = new JsonObject();
+        packet.addProperty("protocol", PROTOCOL);
+        packet.addProperty("kind", "clear");
+        packet.addProperty("session", sessionId.toString());
+        send(player, SCENE_CHANNEL, packet.toString());
+    }
+
+    private static SyncCell syncCell(Player player) {
+        return new SyncCell(player.getWorld().getUID(), player.getLocation().getBlockX() >> 4,
+                player.getLocation().getBlockZ() >> 4);
+    }
+
     private record Snapshot(UUID sessionId, String gameId, GameLocation origin, UUID privatePlayerId, String title,
                             String actionType, List<MenuOption> options, String worldKey) { }
+
+    private record SyncCell(UUID world, int chunkX, int chunkZ) { }
 }

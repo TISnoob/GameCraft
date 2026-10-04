@@ -41,6 +41,7 @@ public final class GameCraftClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(FURNITURE_CHANNEL,
                 (client, handler, buffer, responseSender) -> acceptFurniture(buffer.readString(32767)));
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
+            GameBoardRenderer.clearAll();
             SCENES.clear();
             FURNITURE.clear();
             sendHello();
@@ -114,7 +115,11 @@ public final class GameCraftClient implements ClientModInitializer {
                     GameSceneState scene = GameSceneState.parse(json);
                     SCENES.put(scene.sessionId(), scene);
                 }
-                case "clear" -> SCENES.remove(UUID.fromString(packet.get("session").getAsString()));
+                case "clear" -> {
+                    UUID sessionId = UUID.fromString(packet.get("session").getAsString());
+                    SCENES.remove(sessionId);
+                    client.execute(() -> GameBoardRenderer.clearSession(sessionId));
+                }
                 case "hello_ack" -> { }
                 case "open_hand" -> {
                     GameSceneState scene = GameSceneState.parse(json);

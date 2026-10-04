@@ -14,12 +14,20 @@ import io.github.tis199.gamecraft.paper.session.GameSessionManagerImpl;
 import io.github.tis199.gamecraft.paper.session.GameRoomManager;
 import io.github.tis199.gamecraft.paper.session.GameBoardServiceImpl;
 import io.github.tis199.gamecraft.paper.resourcepack.ResourcePackService;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public final class GameCraftPlugin extends JavaPlugin {
+    /**
+     * Replace this with GameCraft's official numeric bStats plugin id once bStats registration exists.
+     * The repository contains no registered id, so zero deliberately keeps metrics disabled rather than
+     * sending this plugin's data to an unrelated bStats project.
+     */
+    private static final int BSTATS_PLUGIN_ID = 34497;
+
     private ExecutorService ioExecutor;
     private JdbcStorageService storage;
     private AiServiceImpl aiService;
@@ -31,11 +39,13 @@ public final class GameCraftPlugin extends JavaPlugin {
     private GameBoardServiceImpl boardService;
     private ResourcePackService resourcePackService;
     private PaperGameCraftServices services;
+    private Metrics metrics;
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
         getDataFolder().mkdirs();
+        startMetrics();
         ioExecutor = Executors.newFixedThreadPool(4, runnable -> {
             Thread thread = new Thread(runnable, "GameCraft-IO");
             thread.setDaemon(true);
@@ -100,6 +110,27 @@ public final class GameCraftPlugin extends JavaPlugin {
         }
         if (ioExecutor != null) {
             ioExecutor.shutdownNow();
+        }
+        if (metrics != null) {
+            try {
+                metrics.shutdown();
+            } catch (RuntimeException exception) {
+                getLogger().fine("Could not shut down bStats metrics cleanly: " + exception.getMessage());
+            } finally {
+                metrics = null;
+            }
+        }
+    }
+
+    private void startMetrics() {
+        if (BSTATS_PLUGIN_ID <= 0) {
+            getLogger().info("bStats support is packaged but disabled until the official GameCraft bStats plugin ID is configured.");
+            return;
+        }
+        try {
+            metrics = new Metrics(this, BSTATS_PLUGIN_ID);
+        } catch (RuntimeException exception) {
+            getLogger().warning("Could not initialize bStats metrics: " + exception.getMessage());
         }
     }
 

@@ -119,6 +119,8 @@ Install Stockfish (16 is the default target) for the server OS and CPU architect
 
 The generated `plugins/GameCraft/config.yml` contains module registry, storage, AI, resource pack, and proxy settings. SQLite is the default for one server. MariaDB can be configured for shared network storage. The generic AI text service is disabled by default; enabling it requires a supported provider key. It is not used by game bots in the current release.
 
+The Paper core packages bStats 3.2.1 from Maven Central and initializes it only after an official numeric GameCraft bStats project ID is registered. The current source constant is intentionally `0` because no GameCraft bStats project ID is present in repository metadata; update `BSTATS_PLUGIN_ID` in `GameCraftPlugin.java` with the registered ID before enabling metrics. Do not substitute the Bukkit plugin name (`GameCraft`) for the numeric bStats ID.
+
 PlaceholderAPI is optional. If installed, the core provides `%gamecraft_modules_loaded%`, `%gamecraft_player_sitting%`, `%gamecraft_ai_enabled%`, and `%gamecraft_active_games%`.
 
 ## Current platform limits
