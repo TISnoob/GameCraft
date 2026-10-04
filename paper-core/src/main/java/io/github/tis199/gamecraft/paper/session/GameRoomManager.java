@@ -214,15 +214,17 @@ public final class GameRoomManager {
         if (room.hostSeat >= seats) {
             throw new IllegalStateException("<yellow>Invite enough players for the side/color you selected.</yellow>");
         }
-        GameLocation origin = furniture.findOrPlaceGameTable(room.gameId, host);
+        FurnitureManager.GameTablePlacement table = furniture.findOrPlaceGameTableForMatch(room.gameId, host);
         Map<String, String> properties = new HashMap<>();
         if (room.teamMode) properties.put("team-mode", "true");
         try {
-            GameSession session = sessions.createSession(room.gameId, ordered, room.difficulty, origin,
+            GameSession session = sessions.createSession(room.gameId, ordered, room.difficulty, table.origin(),
                     false, seats, properties);
+            if (table.temporary()) sessions.removeFurnitureWhenSessionEnds(session, table.furnitureId());
             remove(room);
             session.broadcastMessage("<gold>✦ " + title(room.gameId) + " is live!</gold> <gray>Nearby players can watch the board.</gray>");
         } catch (RuntimeException exception) {
+            if (table.temporary()) sessions.removeTemporaryFurnitureIfUnused(table.furnitureId());
             throw new IllegalStateException("<red>Couldn't start the room: " + escape(message(exception)) + "</red>");
         }
     }

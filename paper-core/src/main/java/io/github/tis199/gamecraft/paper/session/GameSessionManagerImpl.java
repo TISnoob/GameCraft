@@ -61,6 +61,8 @@ public final class GameSessionManagerImpl implements GameSessionManager, Listene
     private final GameScheduler scheduler;
     private final Map<UUID, GameSessionImpl> sessions = new ConcurrentHashMap<>();
     private final Map<UUID, UUID> playerToSession = new ConcurrentHashMap<>();
+    private final Map<UUID, UUID> temporaryFurnitureBySession = new ConcurrentHashMap<>();
+    private final Map<UUID, Set<UUID>> sessionsByTemporaryFurniture = new ConcurrentHashMap<>();
     private final Map<UUID, PlayerInventorySnapshot> playerInventories = new ConcurrentHashMap<>();
     private final NamespacedKey gameControlKey;
     private final NamespacedKey gameControlTypeKey;
@@ -174,6 +176,32 @@ public final class GameSessionManagerImpl implements GameSessionManager, Listene
     @Override
     public Optional<GameSession> getSession(UUID sessionId) {
         return Optional.ofNullable(sessions.get(sessionId));
+    }
+
+    /** Associates automatically spawned furniture with a session's terminal cleanup. */
+    public void removeFurnitureWhenSessionEnds(GameSession session, UUID furnitureId) {
+        boolean attached;
+        boolean removeIfUnused;
+        synchronized (this) {
+            attached = sessions.get(session.sessionId()) == session
+                    && session.state() == io.github.tis199.gamecraft.api.GameSessionState.IN_PROGRESS;
+            if (attached) {
+                temporaryFurnitureBySession.put(session.sessionId(), furnitureId);
+                sessionsByTemporaryFurniture.computeIfAbsent(furnitureId, ignored -> new HashSet<>())
+                        .add(session.sessionId());
+            }
+            removeIfUnused = !attached && !sessionsByTemporaryFurniture.containsKey(furnitureId);
+        }
+        if (removeIfUnused) plugin.furniture().remove(furnitureId);
+    }
+
+    /** Removes an automatically created table when startup fails before it can be attached. */
+    public void removeTemporaryFurnitureIfUnused(UUID furnitureId) {
+        boolean removeIfUnused;
+        synchronized (this) {
+            removeIfUnused = !sessionsByTemporaryFurniture.containsKey(furnitureId);
+        }
+        if (removeIfUnused) plugin.furniture().remove(furnitureId);
     }
 
     @Override
@@ -401,7 +429,22 @@ public final class GameSessionManagerImpl implements GameSessionManager, Listene
     }
 
     void removeSession(UUID sessionId) {
-        GameSessionImpl session = sessions.remove(sessionId);
+        GameSessionImpl session;
+        UUID temporaryFurnitureToRemove = null;
+        synchronized (this) {
+            session = sessions.remove(sessionId);
+            UUID temporaryFurniture = session == null ? null : temporaryFurnitureBySession.remove(sessionId);
+            if (temporaryFurniture != null) {
+                Set<UUID> owners = sessionsByTemporaryFurniture.get(temporaryFurniture);
+                if (owners != null) {
+                    owners.remove(sessionId);
+                    if (owners.isEmpty()) {
+                        sessionsByTemporaryFurniture.remove(temporaryFurniture);
+                        temporaryFurnitureToRemove = temporaryFurniture;
+                    }
+                }
+            }
+        }
         if (session != null) {
             for (UUID playerId : session.players()) {
                 playerToSession.remove(playerId, sessionId);
@@ -410,6 +453,7 @@ public final class GameSessionManagerImpl implements GameSessionManager, Listene
                     if (player != null) restorePlayerNow(player);
                 }, () -> { });
             }
+            if (temporaryFurnitureToRemove != null) plugin.furniture().remove(temporaryFurnitureToRemove);
         }
     }
 
@@ -424,6 +468,8 @@ public final class GameSessionManagerImpl implements GameSessionManager, Listene
         }
         sessions.clear();
         playerToSession.clear();
+        temporaryFurnitureBySession.clear();
+        sessionsByTemporaryFurniture.clear();
     }
 
     private record PlayerInventorySnapshot(ItemStack[] contents, ItemStack[] armor,

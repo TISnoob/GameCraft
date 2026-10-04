@@ -309,11 +309,10 @@ public final class GameCraftCommand implements CommandExecutor, TabCompleter {
             return;
         }
         try {
-            GameLocation origin = gameOrigin(player, draft.module.descriptor().id());
             Map<String, String> properties = new HashMap<>();
             if (draft.mode.equals("computer")) properties.put("human-seat-order", Integer.toString(draft.hostSeat));
-            GameSession session = sessions.createSession(draft.module.descriptor().id(), List.of(playerId),
-                    draft.difficulty, origin, draft.mode.equals("computer"), draft.capacity, properties);
+            GameSession session = startSessionWithTable(player, draft.module.descriptor().id(),
+                    draft.difficulty, draft.mode.equals("computer"), draft.capacity, properties);
             session.broadcastMessage("<gold>✦ Your " + safe(draft.module.descriptor().displayName())
                     + " match is live!</gold> <gray>Nearby players can watch the board.</gray>");
             drafts.remove(playerId);
@@ -456,8 +455,8 @@ public final class GameCraftCommand implements CommandExecutor, TabCompleter {
             int count = mode.equals("solo") ? 1 : (args.length > 4 ? Integer.parseInt(args[4]) : 2);
             Map<String, String> properties = new HashMap<>();
             if (computer && args.length > 5 && args[5].matches("[01]")) properties.put("human-seat-order", args[5]);
-            GameSession session = sessions.createSession(module.descriptor().id(), List.of(player.getUniqueId()),
-                    difficulty, gameOrigin(player, module.descriptor().id()), computer, count, properties);
+            GameSession session = startSessionWithTable(player, module.descriptor().id(),
+                    difficulty, computer, count, properties);
             session.broadcastMessage("<gold>✦ " + safe(module.descriptor().displayName()) + " match started!</gold>");
         } catch (NumberFormatException exception) {
             tell(player, "<red>Player count must be a number.</red>");
@@ -466,8 +465,19 @@ public final class GameCraftCommand implements CommandExecutor, TabCompleter {
         }
     }
 
-    private GameLocation gameOrigin(Player player, String gameId) {
-        return furniture.findOrPlaceGameTable(gameId, player);
+    private GameSession startSessionWithTable(Player player, String gameId, String difficulty,
+                                              boolean computerOpponent, int totalPlayers,
+                                              Map<String, String> properties) {
+        FurnitureManager.GameTablePlacement table = furniture.findOrPlaceGameTableForMatch(gameId, player);
+        try {
+            GameSession session = sessions.createSession(gameId, List.of(player.getUniqueId()), difficulty,
+                    table.origin(), computerOpponent, totalPlayers, properties);
+            if (table.temporary()) sessions.removeFurnitureWhenSessionEnds(session, table.furnitureId());
+            return session;
+        } catch (RuntimeException exception) {
+            if (table.temporary()) sessions.removeTemporaryFurnitureIfUnused(table.furnitureId());
+            throw exception;
+        }
     }
 
     private void placeFurniture(CommandSender sender, String[] args) {

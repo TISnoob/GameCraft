@@ -56,7 +56,7 @@ Difficulty values are `easy`, `medium`, `hard`, and `expert`. Each module decide
 
 The computer seat count includes you: `monopoly computer medium 4` is one human and three bots. The multiplayer flow is room-based so invited players can choose whether to join before the match begins. Ludo offers a four-player 2v2 team option.
 
-`gamecraft.admin` defaults to operators. Furniture uses real table and stair blocks, with an invisible seat anchor for sitting. Tables are at most 3×3 blocks (UNO and Solitaire use 3×2). Right-click a table to open `/gc play`. Chairs can be right-clicked to sit on them; `/gc sit` is also available. `/gc play` uses a nearby table for the selected game within 16 blocks; if none is nearby, it places that game's table five blocks in front of the host. The client mod textures furniture between matches and draws active boards and pieces; only session members can make moves.
+`gamecraft.admin` defaults to operators. Furniture uses real table and stair blocks, with an invisible seat anchor for sitting. Tables are at most 3×3 blocks (UNO and Solitaire use 3×2). Right-click a table to open `/gc play`. Chairs can be right-clicked to sit on them; `/gc sit` is also available. `/gc play` uses a nearby table for the selected game within 16 blocks; if none is nearby, it places a temporary table five blocks in front of the host and restores the original blocks when the match ends. Explicitly placed tables remain until removed by an administrator. The client mod textures furniture between matches and draws active boards and pieces; only session members can make moves.
 
 ## In-world boards and client mod
 

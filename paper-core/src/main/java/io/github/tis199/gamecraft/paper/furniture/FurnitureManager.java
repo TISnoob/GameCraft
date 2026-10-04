@@ -55,6 +55,7 @@ public final class FurnitureManager implements FurnitureService, Listener, AutoC
     private final Map<UUID, GameLocation> locations = new ConcurrentHashMap<>();
     private final Map<UUID, GameLocation> tableOrigins = new ConcurrentHashMap<>();
     private final Map<UUID, String> tableGames = new ConcurrentHashMap<>();
+    private final Set<UUID> temporaryTables = ConcurrentHashMap.newKeySet();
     private final Map<UUID, String> chairGames = new ConcurrentHashMap<>();
     private final Map<UUID, Map<BlockKey, BlockRecord>> furnitureBlocks = new ConcurrentHashMap<>();
     private final Map<UUID, UUID> seatEntities = new ConcurrentHashMap<>();
@@ -144,7 +145,27 @@ public final class FurnitureManager implements FurnitureService, Listener, AutoC
                 player.getLocation().getY(), player.getLocation().getZ());
         Optional<GameLocation> existing = findTableNear(playerPosition, 16.0, gameId);
         if (existing.isPresent()) return existing.get();
+        return placeGameTableAhead(gameId, player, false).origin();
+    }
 
+    /** Finds a persistent table or creates a temporary one owned by the next match. */
+    public GameTablePlacement findOrPlaceGameTableForMatch(String gameId, Player player) {
+        GameLocation playerPosition = new GameLocation(player.getWorld().getUID(), player.getLocation().getX(),
+                player.getLocation().getY(), player.getLocation().getZ());
+        Optional<Map.Entry<UUID, GameLocation>> existing = tableOrigins.entrySet().stream()
+                .filter(entry -> gameId.equals(tableGames.get(entry.getKey())))
+                .filter(entry -> entry.getValue().worldId().equals(playerPosition.worldId()))
+                .filter(entry -> squaredDistance(entry.getValue(), playerPosition) <= 16.0 * 16.0)
+                .min(Comparator.comparingDouble(entry -> squaredDistance(entry.getValue(), playerPosition)));
+        if (existing.isPresent()) {
+            Map.Entry<UUID, GameLocation> table = existing.get();
+            return new GameTablePlacement(table.getValue(), table.getKey(), temporaryTables.contains(table.getKey()));
+        }
+
+        return placeGameTableAhead(gameId, player, true);
+    }
+
+    private GameTablePlacement placeGameTableAhead(String gameId, Player player, boolean temporary) {
         TableStyle style = TableStyle.forGame(gameId);
         org.bukkit.util.Vector forward = player.getLocation().getDirection().setY(0);
         if (forward.lengthSquared() < 0.001) forward.setZ(1); else forward.normalize();
@@ -156,10 +177,10 @@ public final class FurnitureManager implements FurnitureService, Listener, AutoC
         double parityZ = style.depth() % 2 == 0 ? 0.0 : 0.5;
         GameLocation surfaceCenter = new GameLocation(player.getWorld().getUID(), centerX + parityX,
                 player.getLocation().getBlockY() + 1.0, centerZ + parityZ);
-        return placeGameTableAtCenter(gameId, surfaceCenter);
+        return placeGameTableAtCenter(gameId, surfaceCenter, temporary);
     }
 
-    private GameLocation placeGameTableAtCenter(String gameId, GameLocation surfaceCenter) {
+    private GameTablePlacement placeGameTableAtCenter(String gameId, GameLocation surfaceCenter, boolean temporary) {
         TableStyle style = TableStyle.forGame(gameId);
         double centerX = Math.floor(surfaceCenter.x()) + (style.width() % 2 == 0 ? 0 : 0.5);
         double centerZ = Math.floor(surfaceCenter.z()) + (style.depth() % 2 == 0 ? 0 : 0.5);
@@ -167,7 +188,8 @@ public final class FurnitureManager implements FurnitureService, Listener, AutoC
         GameLocation corner = new GameLocation(surfaceCenter.worldId(), centerX - style.width() / 2.0,
                 floorY, centerZ - style.depth() / 2.0);
         UUID id = placeGameTable(gameId, corner);
-        return tableOrigins.getOrDefault(id, surfaceCenter);
+        if (temporary) temporaryTables.add(id);
+        return new GameTablePlacement(tableOrigins.getOrDefault(id, surfaceCenter), id, temporary);
     }
 
     private void placeTableBlocks(UUID furnitureId, GameLocation corner, int width, int depth,
@@ -254,6 +276,7 @@ public final class FurnitureManager implements FurnitureService, Listener, AutoC
         if (locations.remove(furnitureId) == null) return false;
         tableOrigins.remove(furnitureId);
         tableGames.remove(furnitureId);
+        temporaryTables.remove(furnitureId);
         chairGames.remove(furnitureId);
         UUID seatId = seatEntities.remove(furnitureId);
         if (seatId != null) scheduler.runForEntity(seatId, () -> {
@@ -518,6 +541,7 @@ public final class FurnitureManager implements FurnitureService, Listener, AutoC
         locations.clear();
         tableOrigins.clear();
         tableGames.clear();
+        temporaryTables.clear();
         chairGames.clear();
         furnitureBlocks.clear();
         seatEntities.clear();
@@ -529,6 +553,7 @@ public final class FurnitureManager implements FurnitureService, Listener, AutoC
 
     private record FurnitureSnapshot(UUID id, String type, String game, String world,
                                      double x, double y, double z, int width, int depth) { }
+    public record GameTablePlacement(GameLocation origin, UUID furnitureId, boolean temporary) { }
     private record SyncCell(UUID world, int chunkX, int chunkZ) { }
 
     private record TableStyle(String id, int width, int depth) {
