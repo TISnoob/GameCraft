@@ -1,5 +1,6 @@
 package io.github.tis199.gamecraft.api;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -13,6 +14,22 @@ import java.util.UUID;
 public interface GameModule {
     GameModuleDescriptor descriptor();
 
+    default int minPlayers() {
+        return 1;
+    }
+
+    default int maxPlayers() {
+        return 1;
+    }
+
+    default List<String> supportedDifficulties() {
+        return List.of();
+    }
+
+    default boolean supportsComputer() {
+        return false;
+    }
+
     default void onLoad(GameModuleContext context) throws Exception {
     }
 
@@ -20,6 +37,12 @@ public interface GameModule {
     }
 
     default void onDisable() {
+    }
+
+    default void onSessionStart(GameSession session) {
+    }
+
+    default void onSessionEnd(GameSession session) {
     }
 
     /** Optional main menu to display when this module is selected. */

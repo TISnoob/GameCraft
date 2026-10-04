@@ -1,0 +1,110 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/paper"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 100
+      },
+      "model": "gamecraft:item/chess-white-pawn"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 101
+      },
+      "model": "gamecraft:item/chess-white-knight"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 102
+      },
+      "model": "gamecraft:item/chess-white-bishop"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 103
+      },
+      "model": "gamecraft:item/chess-white-rook"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 104
+      },
+      "model": "gamecraft:item/chess-white-queen"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 105
+      },
+      "model": "gamecraft:item/chess-white-king"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 106
+      },
+      "model": "gamecraft:item/chess-black-pawn"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 107
+      },
+      "model": "gamecraft:item/chess-black-knight"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 108
+      },
+      "model": "gamecraft:item/chess-black-bishop"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 109
+      },
+      "model": "gamecraft:item/chess-black-rook"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 110
+      },
+      "model": "gamecraft:item/chess-black-queen"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 111
+      },
+      "model": "gamecraft:item/chess-black-king"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 900
+      },
+      "model": "gamecraft:item/gamecraft-control"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 902
+      },
+      "model": "gamecraft:item/chess-move-marker"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 903
+      },
+      "model": "gamecraft:item/chess-selected-marker"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 910
+      },
+      "model": "gamecraft:item/table-chess"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 920
+      },
+      "model": "gamecraft:item/chair-chess"
+    }
+  ]
+}

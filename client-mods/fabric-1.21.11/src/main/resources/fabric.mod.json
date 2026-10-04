@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "gamecraft_client",
+  "version": "${version}",
+  "name": "GameCraft Client",
+  "description": "Client renderer and controls for GameCraft's in-world board games.",
+  "authors": ["TIS199", "FieldB0y (3D chess-piece models)"],
+  "contact": {
+    "sources": "https://github.com/TIS199/GameCraft"
+  },
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "io.github.tis199.gamecraft.client.GameCraftClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.11",
+    "fabric-api": "*"
+  }
+}

@@ -29,12 +29,23 @@ public final class PaperScheduler implements GameScheduler {
 
     @Override
     public void runAt(GameLocation location, Runnable task) {
-        World world = Bukkit.getWorld(location.worldId());
-        if (world == null) {
-            return;
-        }
-        Bukkit.getRegionScheduler().execute(plugin,
-                new org.bukkit.Location(world, location.x(), location.y(), location.z()), task);
+        runGlobal(() -> {
+            World world = Bukkit.getWorld(location.worldId());
+            if (world == null) return;
+            Bukkit.getRegionScheduler().execute(plugin,
+                    new org.bukkit.Location(world, location.x(), location.y(), location.z()), task);
+        });
+    }
+
+    @Override
+    public void runAtLater(GameLocation location, long delayTicks, Runnable task) {
+        runGlobal(() -> {
+            World world = Bukkit.getWorld(location.worldId());
+            if (world == null) return;
+            Bukkit.getRegionScheduler().runDelayed(plugin,
+                    new org.bukkit.Location(world, location.x(), location.y(), location.z()),
+                    ignored -> task.run(), Math.max(1L, delayTicks));
+        });
     }
 
     @Override

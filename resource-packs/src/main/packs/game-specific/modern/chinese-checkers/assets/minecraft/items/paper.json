@@ -1,0 +1,90 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "entries": [
+      {
+        "threshold": 401,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chinese-red"
+        }
+      },
+      {
+        "threshold": 402,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chinese-yellow"
+        }
+      },
+      {
+        "threshold": 403,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chinese-blue"
+        }
+      },
+      {
+        "threshold": 404,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chinese-green"
+        }
+      },
+      {
+        "threshold": 405,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chinese-purple"
+        }
+      },
+      {
+        "threshold": 406,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chinese-orange"
+        }
+      },
+      {
+        "threshold": 900,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/gamecraft-control"
+        }
+      },
+      {
+        "threshold": 912,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-chinese-checkers"
+        }
+      },
+      {
+        "threshold": 913,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-checkers"
+        }
+      },
+      {
+        "threshold": 922,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-chinese-checkers"
+        }
+      },
+      {
+        "threshold": 923,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-checkers"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/paper"
+    }
+  }
+}

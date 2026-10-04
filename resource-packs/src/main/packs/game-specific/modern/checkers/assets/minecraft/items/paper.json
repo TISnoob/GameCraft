@@ -1,0 +1,76 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "entries": [
+      {
+        "threshold": 201,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/checkers-red-man"
+        }
+      },
+      {
+        "threshold": 202,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/checkers-red-king"
+        }
+      },
+      {
+        "threshold": 203,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/checkers-black-man"
+        }
+      },
+      {
+        "threshold": 204,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/checkers-black-king"
+        }
+      },
+      {
+        "threshold": 900,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/gamecraft-control"
+        }
+      },
+      {
+        "threshold": 911,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-ludo"
+        }
+      },
+      {
+        "threshold": 913,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-checkers"
+        }
+      },
+      {
+        "threshold": 921,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-ludo"
+        }
+      },
+      {
+        "threshold": 923,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-checkers"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/paper"
+    }
+  }
+}

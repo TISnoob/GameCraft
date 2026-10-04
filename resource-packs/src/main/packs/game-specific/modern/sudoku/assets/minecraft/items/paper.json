@@ -1,0 +1,97 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "entries": [
+      {
+        "threshold": 801,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-1"
+        }
+      },
+      {
+        "threshold": 802,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-2"
+        }
+      },
+      {
+        "threshold": 803,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-3"
+        }
+      },
+      {
+        "threshold": 804,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-4"
+        }
+      },
+      {
+        "threshold": 805,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-5"
+        }
+      },
+      {
+        "threshold": 806,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-6"
+        }
+      },
+      {
+        "threshold": 807,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-7"
+        }
+      },
+      {
+        "threshold": 808,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-8"
+        }
+      },
+      {
+        "threshold": 809,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-9"
+        }
+      },
+      {
+        "threshold": 900,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/gamecraft-control"
+        }
+      },
+      {
+        "threshold": 917,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-sudoku"
+        }
+      },
+      {
+        "threshold": 927,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-sudoku"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/paper"
+    }
+  }
+}

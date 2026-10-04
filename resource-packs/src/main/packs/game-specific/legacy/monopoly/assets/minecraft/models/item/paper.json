@@ -1,0 +1,80 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/paper"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 501
+      },
+      "model": "gamecraft:item/monopoly-house"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 505
+      },
+      "model": "gamecraft:item/monopoly-hotel"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 506
+      },
+      "model": "gamecraft:item/monopoly-token-red"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 507
+      },
+      "model": "gamecraft:item/monopoly-token-yellow"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 508
+      },
+      "model": "gamecraft:item/monopoly-token-blue"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 509
+      },
+      "model": "gamecraft:item/monopoly-token-green"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 510
+      },
+      "model": "gamecraft:item/monopoly-token-purple"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 511
+      },
+      "model": "gamecraft:item/monopoly-token-white"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 900
+      },
+      "model": "gamecraft:item/gamecraft-control"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 901
+      },
+      "model": "gamecraft:item/dice"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 914
+      },
+      "model": "gamecraft:item/table-monopoly"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 924
+      },
+      "model": "gamecraft:item/chair-monopoly"
+    }
+  ]
+}

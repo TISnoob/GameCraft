@@ -1,0 +1,83 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "entries": [
+      {
+        "threshold": 301,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/ludo-red"
+        }
+      },
+      {
+        "threshold": 302,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/ludo-yellow"
+        }
+      },
+      {
+        "threshold": 303,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/ludo-blue"
+        }
+      },
+      {
+        "threshold": 304,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/ludo-green"
+        }
+      },
+      {
+        "threshold": 900,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/gamecraft-control"
+        }
+      },
+      {
+        "threshold": 901,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/dice"
+        }
+      },
+      {
+        "threshold": 911,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-ludo"
+        }
+      },
+      {
+        "threshold": 912,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-chinese-checkers"
+        }
+      },
+      {
+        "threshold": 921,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-ludo"
+        }
+      },
+      {
+        "threshold": 922,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-chinese-checkers"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/paper"
+    }
+  }
+}

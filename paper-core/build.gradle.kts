@@ -25,6 +25,10 @@ tasks.jar {
 }
 
 tasks.processResources {
+    dependsOn(":resource-packs:javaUniversalPack")
+    from(rootProject.file("resource-packs/build/packs/gamecraft-java-universal.zip")) {
+        into("packs")
+    }
     filesMatching("plugin.yml") {
         expand("version" to project.version)
     }

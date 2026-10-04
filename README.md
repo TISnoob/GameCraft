@@ -1,26 +1,37 @@
 # GameCraft
-<<<<<<< ours
-hello
-=======
-hello
-it will be a minecrart papermc plugin. it will support 1.20 , 1.21 , 26.1 , 26.2 , 26.3 papermc . it will also support folia and velocity 
-https://docs.papermc.io/paper/dev/
-https://docs.papermc.io/velocity/
-https://docs.papermc.io/folia/reference/overview/
-https://github.com/SpigotMC/BungeeCord
 
-the plugin name will be GameCraft. It will add games like chess,ludo like game to the server. yes it will use custom resource pack. 
+GameCraft is a lobby-games platform for Paper and Folia servers. The core provides shared game sessions, animated in-world 3D boards and pieces, game-specific tables and chairs, storage, optional integrations, and a versioned API. `/gc play` opens a chest menu for game and room setup; active gameplay stays in the world, where players click pieces and controls.
 
-the plugin it self will not ship with games. the server owner have to add games in the config.yml and the plugin will download required files from this progects github. every game has its own .yml file. 
-games can be played with other players or with computer. we will use open source engines as computers. if there is none, we will develop our own. 
+The repository currently contains separate modules for Chess, Ludo, Chinese Checkers, Checkers, Monopoly, UNO, Solitaire, and Sudoku. The core JAR does not embed those games. The distribution build produces one JAR per game alongside the core and companion artifacts.
 
-Games that will be avaible for now: chess , ludo , chinese checkers, checkers, monopoly, Uno, Solitaire, suduku.
+In-world gameplay uses the required Fabric client mod for Minecraft Java 1.21.1. It bundles the board textures and detailed pieces, draws the game on physical tables, handles clicks, animates moves, and opens the UNO hand screen. Optional Java resource packs provide vanilla item appearances for other client versions; they do not replace the gameplay mod.
 
+## Build
 
-the main plugin will have core functions like intregration with other plugins like placeholder api and etc necessary plugins. the plugin will add custom blocks that will help the game . like table , chair , chess pieces . the plugin will add sitting fuctionalities.  the plugin will have menu with chest click function and for geyser players, a geyser-addon will be build along in this project to show options in the PE clients (no chest click fucntion in PE)
+Build the distribution with JDK 25:
 
+```sh
+./gradlew assembleDistribution
+```
 
-the plugin will have all modern features like modern minigame plugins
+Artifacts are copied to `build/distributions/`. For installing a game, see [the build and install guide](docs/build.md); for adding one, see [the game-module developer guide](docs/game-development/README.md).
 
-this plugin is mainly focused to have fun in the lobby
->>>>>>> theirs
+## Documentation
+
+- [Documentation index](docs/README.md)
+- [Server setup, modules, and commands](docs/server-setup.md)
+- [Build and artifact guide](docs/build.md)
+- [Game module development](docs/game-development/README.md)
+- [Module release manifest](docs/module-release.md)
+
+## Project areas
+
+- `paper-core/` — Paper/Folia plugin source
+- `gamecraft-api/` — stable Java API shared with game modules
+- `games/` — separately built game modules and shared game code
+- `proxy-velocity/`, `proxy-bungeecord/`, `geyser-addon/` — companion project scaffolds
+- `resource-packs/` — starter Java and Bedrock pack projects
+- `client-mods/fabric-1.21.1/` — client renderer, board interaction, and bundled 3D assets
+- `modules/manifest.json` — release registry for downloadable game modules
+
+Chess uses Chesslib for legal moves and supports Stockfish 16 through UCI. Stockfish is not bundled; the server owner installs an executable or configures a verified HTTPS download. The other modules currently provide their own rules and lightweight computer-player strategies. See the developer guide for each game's current scope and known ruleset limits.

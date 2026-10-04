@@ -1,0 +1,62 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/paper"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 201
+      },
+      "model": "gamecraft:item/checkers-red-man"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 202
+      },
+      "model": "gamecraft:item/checkers-red-king"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 203
+      },
+      "model": "gamecraft:item/checkers-black-man"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 204
+      },
+      "model": "gamecraft:item/checkers-black-king"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 900
+      },
+      "model": "gamecraft:item/gamecraft-control"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 911
+      },
+      "model": "gamecraft:item/table-ludo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 913
+      },
+      "model": "gamecraft:item/table-checkers"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 921
+      },
+      "model": "gamecraft:item/chair-ludo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 923
+      },
+      "model": "gamecraft:item/chair-checkers"
+    }
+  ]
+}

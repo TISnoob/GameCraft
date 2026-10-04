@@ -1,0 +1,433 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "entries": [
+      {
+        "threshold": 601,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-draw-pile"
+        }
+      },
+      {
+        "threshold": 602,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-0"
+        }
+      },
+      {
+        "threshold": 603,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-1"
+        }
+      },
+      {
+        "threshold": 604,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-2"
+        }
+      },
+      {
+        "threshold": 605,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-3"
+        }
+      },
+      {
+        "threshold": 606,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-4"
+        }
+      },
+      {
+        "threshold": 607,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-5"
+        }
+      },
+      {
+        "threshold": 608,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-6"
+        }
+      },
+      {
+        "threshold": 609,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-7"
+        }
+      },
+      {
+        "threshold": 610,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-8"
+        }
+      },
+      {
+        "threshold": 611,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-9"
+        }
+      },
+      {
+        "threshold": 612,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-10"
+        }
+      },
+      {
+        "threshold": 613,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-11"
+        }
+      },
+      {
+        "threshold": 614,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-12"
+        }
+      },
+      {
+        "threshold": 615,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-13"
+        }
+      },
+      {
+        "threshold": 616,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-14"
+        }
+      },
+      {
+        "threshold": 617,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-15"
+        }
+      },
+      {
+        "threshold": 618,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-16"
+        }
+      },
+      {
+        "threshold": 619,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-17"
+        }
+      },
+      {
+        "threshold": 620,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-18"
+        }
+      },
+      {
+        "threshold": 621,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-19"
+        }
+      },
+      {
+        "threshold": 622,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-20"
+        }
+      },
+      {
+        "threshold": 623,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-21"
+        }
+      },
+      {
+        "threshold": 624,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-22"
+        }
+      },
+      {
+        "threshold": 625,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-23"
+        }
+      },
+      {
+        "threshold": 626,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-24"
+        }
+      },
+      {
+        "threshold": 627,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-25"
+        }
+      },
+      {
+        "threshold": 628,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-26"
+        }
+      },
+      {
+        "threshold": 629,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-27"
+        }
+      },
+      {
+        "threshold": 630,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-28"
+        }
+      },
+      {
+        "threshold": 631,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-29"
+        }
+      },
+      {
+        "threshold": 632,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-30"
+        }
+      },
+      {
+        "threshold": 633,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-31"
+        }
+      },
+      {
+        "threshold": 634,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-32"
+        }
+      },
+      {
+        "threshold": 635,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-33"
+        }
+      },
+      {
+        "threshold": 636,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-34"
+        }
+      },
+      {
+        "threshold": 637,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-35"
+        }
+      },
+      {
+        "threshold": 638,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-36"
+        }
+      },
+      {
+        "threshold": 639,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-37"
+        }
+      },
+      {
+        "threshold": 640,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-38"
+        }
+      },
+      {
+        "threshold": 641,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-39"
+        }
+      },
+      {
+        "threshold": 642,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-40"
+        }
+      },
+      {
+        "threshold": 643,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-41"
+        }
+      },
+      {
+        "threshold": 644,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-42"
+        }
+      },
+      {
+        "threshold": 645,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-43"
+        }
+      },
+      {
+        "threshold": 646,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-44"
+        }
+      },
+      {
+        "threshold": 647,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-45"
+        }
+      },
+      {
+        "threshold": 648,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-46"
+        }
+      },
+      {
+        "threshold": 649,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-47"
+        }
+      },
+      {
+        "threshold": 650,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-48"
+        }
+      },
+      {
+        "threshold": 651,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-49"
+        }
+      },
+      {
+        "threshold": 652,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-50"
+        }
+      },
+      {
+        "threshold": 653,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-51"
+        }
+      },
+      {
+        "threshold": 654,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-52"
+        }
+      },
+      {
+        "threshold": 655,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-53"
+        }
+      },
+      {
+        "threshold": 658,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-call"
+        }
+      },
+      {
+        "threshold": 659,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-pass"
+        }
+      },
+      {
+        "threshold": 900,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/gamecraft-control"
+        }
+      },
+      {
+        "threshold": 915,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-uno"
+        }
+      },
+      {
+        "threshold": 925,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-uno"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/paper"
+    }
+  }
+}

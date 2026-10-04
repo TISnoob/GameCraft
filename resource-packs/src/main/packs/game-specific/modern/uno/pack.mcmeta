@@ -1,0 +1,18 @@
+{
+  "pack": {
+    "pack_format": 46,
+    "supported_formats": {
+      "min_inclusive": 46,
+      "max_inclusive": 57
+    },
+    "description": "GameCraft 3D boards and tabletop pieces",
+    "min_format": [
+      46,
+      0
+    ],
+    "max_format": [
+      97,
+      1
+    ]
+  }
+}

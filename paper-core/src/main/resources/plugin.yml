@@ -9,11 +9,11 @@ softdepend: [PlaceholderAPI]
 commands:
   gamecraft:
     description: GameCraft core and module administration.
-    usage: /gamecraft <status|reload|modules|furniture|sit|stand>
+    usage: /gamecraft <help|status|modules|play|forfeit|furniture|sit|stand|reload|enable|disable>
     aliases: [gc]
 permissions:
   gamecraft.use:
-    description: Use GameCraft player features.
+    description: Use GameCraft player features and start games.
     default: true
   gamecraft.admin:
     description: Administer the GameCraft core and modules.

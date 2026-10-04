@@ -128,6 +128,10 @@ public final class GameModuleManager implements AutoCloseable {
         return List.copyOf(plugin.getConfig().getStringList("modules.enabled-games"));
     }
 
+    public java.util.Optional<GameModule> getModule(String id) {
+        return loaded.stream().map(LoadedModule::module).filter(m -> m.descriptor().id().equals(id)).findFirst();
+    }
+
     private JsonObject fetchManifest(String registry) throws IOException, InterruptedException {
         URI uri = trustedUri(registry);
         HttpRequest request = HttpRequest.newBuilder(uri).timeout(Duration.ofSeconds(20)).GET().build();
@@ -181,35 +185,53 @@ public final class GameModuleManager implements AutoCloseable {
     }
 
     private void loadModule(String id, Path jar) {
+        URLClassLoader classLoader = null;
+        GameModule module = null;
+        boolean initialized = false;
+        boolean registered = false;
         try {
-            URLClassLoader classLoader = new URLClassLoader(new URL[]{jar.toUri().toURL()},
+            classLoader = new URLClassLoader(new URL[]{jar.toUri().toURL()},
                     GameModule.class.getClassLoader());
             ServiceLoader<GameModule> serviceLoader = ServiceLoader.load(GameModule.class, classLoader);
-            int count = 0;
-            for (GameModule module : serviceLoader) {
-                GameModuleDescriptor descriptor = module.descriptor();
-                if (!descriptor.id().equals(id)) {
-                    throw new IllegalStateException("module id does not match enabled id " + id);
-                }
-                if (descriptor.apiVersion() > API_VERSION) {
-                    throw new IllegalStateException("module requires GameCraft API " + descriptor.apiVersion());
-                }
-                Path data = plugin.getDataFolder().toPath().resolve("games").resolve(id);
-                Files.createDirectories(data);
-                Path configFile = plugin.getDataFolder().toPath().resolve("games").resolve(id + ".yml");
-                ensureModuleConfig(module, configFile);
-                YamlConfiguration yaml = YamlConfiguration.loadConfiguration(configFile.toFile());
-                module.onLoad(new GameModuleContext(data, new YamlModuleConfiguration(yaml), services));
-                module.onEnable();
-                loaded.add(new LoadedModule(module, classLoader));
-                count++;
-                plugin.getLogger().info("Loaded game module " + descriptor.displayName() + " " + descriptor.version());
+            List<GameModule> providers = new ArrayList<>();
+            serviceLoader.forEach(providers::add);
+            if (providers.size() != 1) {
+                throw new IllegalStateException("jar must contain exactly one GameModule service provider");
             }
-            if (count == 0) {
-                classLoader.close();
-                throw new IllegalStateException("jar contains no GameModule service provider");
+            module = providers.get(0);
+            GameModuleDescriptor descriptor = module.descriptor();
+            if (!descriptor.id().equals(id)) {
+                throw new IllegalStateException("module id does not match enabled id " + id);
             }
-        } catch (ServiceConfigurationError | Exception exception) {
+            if (descriptor.apiVersion() > API_VERSION) {
+                throw new IllegalStateException("module requires GameCraft API " + descriptor.apiVersion());
+            }
+            Path data = plugin.getDataFolder().toPath().resolve("games").resolve(id);
+            Files.createDirectories(data);
+            Path configFile = plugin.getDataFolder().toPath().resolve("games").resolve(id + ".yml");
+            ensureModuleConfig(module, configFile);
+            YamlConfiguration yaml = YamlConfiguration.loadConfiguration(configFile.toFile());
+            module.onLoad(new GameModuleContext(data, new YamlModuleConfiguration(yaml), services));
+            initialized = true;
+            module.onEnable();
+            loaded.add(new LoadedModule(module, classLoader));
+            registered = true;
+            plugin.getLogger().info("Loaded game module " + descriptor.displayName() + " " + descriptor.version());
+        } catch (ServiceConfigurationError | LinkageError | Exception exception) {
+            if (initialized && module != null) {
+                try {
+                    module.onDisable();
+                } catch (RuntimeException disableFailure) {
+                    exception.addSuppressed(disableFailure);
+                }
+            }
+            if (!registered && classLoader != null) {
+                try {
+                    classLoader.close();
+                } catch (IOException closeFailure) {
+                    exception.addSuppressed(closeFailure);
+                }
+            }
             plugin.getLogger().warning("Failed to load game module '" + id + "': " + exception.getMessage());
         }
     }

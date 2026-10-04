@@ -1,0 +1,1231 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "entries": [
+      {
+        "threshold": 100,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-white-pawn"
+        }
+      },
+      {
+        "threshold": 101,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-white-knight"
+        }
+      },
+      {
+        "threshold": 102,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-white-bishop"
+        }
+      },
+      {
+        "threshold": 103,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-white-rook"
+        }
+      },
+      {
+        "threshold": 104,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-white-queen"
+        }
+      },
+      {
+        "threshold": 105,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-white-king"
+        }
+      },
+      {
+        "threshold": 106,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-black-pawn"
+        }
+      },
+      {
+        "threshold": 107,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-black-knight"
+        }
+      },
+      {
+        "threshold": 108,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-black-bishop"
+        }
+      },
+      {
+        "threshold": 109,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-black-rook"
+        }
+      },
+      {
+        "threshold": 110,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-black-queen"
+        }
+      },
+      {
+        "threshold": 111,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-black-king"
+        }
+      },
+      {
+        "threshold": 201,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/checkers-red-man"
+        }
+      },
+      {
+        "threshold": 202,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/checkers-red-king"
+        }
+      },
+      {
+        "threshold": 203,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/checkers-black-man"
+        }
+      },
+      {
+        "threshold": 204,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/checkers-black-king"
+        }
+      },
+      {
+        "threshold": 301,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/ludo-red"
+        }
+      },
+      {
+        "threshold": 302,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/ludo-yellow"
+        }
+      },
+      {
+        "threshold": 303,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/ludo-blue"
+        }
+      },
+      {
+        "threshold": 304,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/ludo-green"
+        }
+      },
+      {
+        "threshold": 401,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chinese-red"
+        }
+      },
+      {
+        "threshold": 402,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chinese-yellow"
+        }
+      },
+      {
+        "threshold": 403,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chinese-blue"
+        }
+      },
+      {
+        "threshold": 404,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chinese-green"
+        }
+      },
+      {
+        "threshold": 405,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chinese-purple"
+        }
+      },
+      {
+        "threshold": 406,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chinese-orange"
+        }
+      },
+      {
+        "threshold": 501,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-house"
+        }
+      },
+      {
+        "threshold": 505,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-hotel"
+        }
+      },
+      {
+        "threshold": 506,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-token-red"
+        }
+      },
+      {
+        "threshold": 507,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-token-yellow"
+        }
+      },
+      {
+        "threshold": 508,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-token-blue"
+        }
+      },
+      {
+        "threshold": 509,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-token-green"
+        }
+      },
+      {
+        "threshold": 510,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-token-purple"
+        }
+      },
+      {
+        "threshold": 511,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-token-white"
+        }
+      },
+      {
+        "threshold": 601,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-draw-pile"
+        }
+      },
+      {
+        "threshold": 602,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-0"
+        }
+      },
+      {
+        "threshold": 603,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-1"
+        }
+      },
+      {
+        "threshold": 604,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-2"
+        }
+      },
+      {
+        "threshold": 605,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-3"
+        }
+      },
+      {
+        "threshold": 606,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-4"
+        }
+      },
+      {
+        "threshold": 607,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-5"
+        }
+      },
+      {
+        "threshold": 608,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-6"
+        }
+      },
+      {
+        "threshold": 609,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-7"
+        }
+      },
+      {
+        "threshold": 610,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-8"
+        }
+      },
+      {
+        "threshold": 611,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-9"
+        }
+      },
+      {
+        "threshold": 612,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-10"
+        }
+      },
+      {
+        "threshold": 613,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-11"
+        }
+      },
+      {
+        "threshold": 614,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-12"
+        }
+      },
+      {
+        "threshold": 615,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-13"
+        }
+      },
+      {
+        "threshold": 616,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-14"
+        }
+      },
+      {
+        "threshold": 617,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-15"
+        }
+      },
+      {
+        "threshold": 618,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-16"
+        }
+      },
+      {
+        "threshold": 619,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-17"
+        }
+      },
+      {
+        "threshold": 620,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-18"
+        }
+      },
+      {
+        "threshold": 621,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-19"
+        }
+      },
+      {
+        "threshold": 622,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-20"
+        }
+      },
+      {
+        "threshold": 623,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-21"
+        }
+      },
+      {
+        "threshold": 624,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-22"
+        }
+      },
+      {
+        "threshold": 625,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-23"
+        }
+      },
+      {
+        "threshold": 626,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-24"
+        }
+      },
+      {
+        "threshold": 627,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-25"
+        }
+      },
+      {
+        "threshold": 628,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-26"
+        }
+      },
+      {
+        "threshold": 629,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-27"
+        }
+      },
+      {
+        "threshold": 630,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-28"
+        }
+      },
+      {
+        "threshold": 631,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-29"
+        }
+      },
+      {
+        "threshold": 632,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-30"
+        }
+      },
+      {
+        "threshold": 633,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-31"
+        }
+      },
+      {
+        "threshold": 634,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-32"
+        }
+      },
+      {
+        "threshold": 635,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-33"
+        }
+      },
+      {
+        "threshold": 636,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-34"
+        }
+      },
+      {
+        "threshold": 637,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-35"
+        }
+      },
+      {
+        "threshold": 638,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-36"
+        }
+      },
+      {
+        "threshold": 639,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-37"
+        }
+      },
+      {
+        "threshold": 640,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-38"
+        }
+      },
+      {
+        "threshold": 641,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-39"
+        }
+      },
+      {
+        "threshold": 642,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-40"
+        }
+      },
+      {
+        "threshold": 643,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-41"
+        }
+      },
+      {
+        "threshold": 644,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-42"
+        }
+      },
+      {
+        "threshold": 645,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-43"
+        }
+      },
+      {
+        "threshold": 646,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-44"
+        }
+      },
+      {
+        "threshold": 647,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-45"
+        }
+      },
+      {
+        "threshold": 648,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-46"
+        }
+      },
+      {
+        "threshold": 649,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-47"
+        }
+      },
+      {
+        "threshold": 650,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-48"
+        }
+      },
+      {
+        "threshold": 651,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-49"
+        }
+      },
+      {
+        "threshold": 652,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-50"
+        }
+      },
+      {
+        "threshold": 653,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-51"
+        }
+      },
+      {
+        "threshold": 654,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-52"
+        }
+      },
+      {
+        "threshold": 655,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-card-53"
+        }
+      },
+      {
+        "threshold": 658,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-call"
+        }
+      },
+      {
+        "threshold": 659,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/uno-pass"
+        }
+      },
+      {
+        "threshold": 660,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-wood"
+        }
+      },
+      {
+        "threshold": 701,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-deck"
+        }
+      },
+      {
+        "threshold": 702,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-0"
+        }
+      },
+      {
+        "threshold": 703,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-1"
+        }
+      },
+      {
+        "threshold": 704,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-2"
+        }
+      },
+      {
+        "threshold": 705,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-3"
+        }
+      },
+      {
+        "threshold": 706,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-4"
+        }
+      },
+      {
+        "threshold": 707,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-5"
+        }
+      },
+      {
+        "threshold": 708,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-6"
+        }
+      },
+      {
+        "threshold": 709,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-7"
+        }
+      },
+      {
+        "threshold": 710,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-8"
+        }
+      },
+      {
+        "threshold": 711,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-9"
+        }
+      },
+      {
+        "threshold": 712,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-10"
+        }
+      },
+      {
+        "threshold": 713,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-11"
+        }
+      },
+      {
+        "threshold": 714,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-12"
+        }
+      },
+      {
+        "threshold": 715,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-13"
+        }
+      },
+      {
+        "threshold": 716,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-14"
+        }
+      },
+      {
+        "threshold": 717,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-15"
+        }
+      },
+      {
+        "threshold": 718,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-16"
+        }
+      },
+      {
+        "threshold": 719,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-17"
+        }
+      },
+      {
+        "threshold": 720,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-18"
+        }
+      },
+      {
+        "threshold": 721,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-19"
+        }
+      },
+      {
+        "threshold": 722,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-20"
+        }
+      },
+      {
+        "threshold": 723,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-21"
+        }
+      },
+      {
+        "threshold": 724,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-22"
+        }
+      },
+      {
+        "threshold": 725,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-23"
+        }
+      },
+      {
+        "threshold": 726,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-24"
+        }
+      },
+      {
+        "threshold": 727,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-25"
+        }
+      },
+      {
+        "threshold": 728,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-26"
+        }
+      },
+      {
+        "threshold": 729,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-27"
+        }
+      },
+      {
+        "threshold": 730,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-28"
+        }
+      },
+      {
+        "threshold": 731,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-29"
+        }
+      },
+      {
+        "threshold": 732,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-30"
+        }
+      },
+      {
+        "threshold": 733,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-31"
+        }
+      },
+      {
+        "threshold": 734,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-32"
+        }
+      },
+      {
+        "threshold": 735,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-33"
+        }
+      },
+      {
+        "threshold": 736,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-34"
+        }
+      },
+      {
+        "threshold": 737,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-35"
+        }
+      },
+      {
+        "threshold": 738,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-36"
+        }
+      },
+      {
+        "threshold": 739,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-37"
+        }
+      },
+      {
+        "threshold": 740,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-38"
+        }
+      },
+      {
+        "threshold": 741,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-39"
+        }
+      },
+      {
+        "threshold": 742,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-40"
+        }
+      },
+      {
+        "threshold": 743,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-41"
+        }
+      },
+      {
+        "threshold": 744,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-42"
+        }
+      },
+      {
+        "threshold": 745,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-43"
+        }
+      },
+      {
+        "threshold": 746,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-44"
+        }
+      },
+      {
+        "threshold": 747,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-45"
+        }
+      },
+      {
+        "threshold": 748,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-46"
+        }
+      },
+      {
+        "threshold": 749,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-47"
+        }
+      },
+      {
+        "threshold": 750,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-48"
+        }
+      },
+      {
+        "threshold": 751,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-49"
+        }
+      },
+      {
+        "threshold": 752,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-50"
+        }
+      },
+      {
+        "threshold": 753,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-51"
+        }
+      },
+      {
+        "threshold": 801,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-1"
+        }
+      },
+      {
+        "threshold": 802,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-2"
+        }
+      },
+      {
+        "threshold": 803,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-3"
+        }
+      },
+      {
+        "threshold": 804,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-4"
+        }
+      },
+      {
+        "threshold": 805,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-5"
+        }
+      },
+      {
+        "threshold": 806,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-6"
+        }
+      },
+      {
+        "threshold": 807,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-7"
+        }
+      },
+      {
+        "threshold": 808,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-8"
+        }
+      },
+      {
+        "threshold": 809,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/sudoku-9"
+        }
+      },
+      {
+        "threshold": 900,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/gamecraft-control"
+        }
+      },
+      {
+        "threshold": 901,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/dice"
+        }
+      },
+      {
+        "threshold": 902,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-move-marker"
+        }
+      },
+      {
+        "threshold": 903,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-selected-marker"
+        }
+      },
+      {
+        "threshold": 910,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-chess"
+        }
+      },
+      {
+        "threshold": 911,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-ludo"
+        }
+      },
+      {
+        "threshold": 912,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-chinese-checkers"
+        }
+      },
+      {
+        "threshold": 913,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-checkers"
+        }
+      },
+      {
+        "threshold": 914,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-monopoly"
+        }
+      },
+      {
+        "threshold": 915,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-uno"
+        }
+      },
+      {
+        "threshold": 916,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-solitaire"
+        }
+      },
+      {
+        "threshold": 917,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-sudoku"
+        }
+      },
+      {
+        "threshold": 920,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-chess"
+        }
+      },
+      {
+        "threshold": 921,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-ludo"
+        }
+      },
+      {
+        "threshold": 922,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-chinese-checkers"
+        }
+      },
+      {
+        "threshold": 923,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-checkers"
+        }
+      },
+      {
+        "threshold": 924,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-monopoly"
+        }
+      },
+      {
+        "threshold": 925,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-uno"
+        }
+      },
+      {
+        "threshold": 926,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-solitaire"
+        }
+      },
+      {
+        "threshold": 927,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-sudoku"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/paper"
+    }
+  }
+}

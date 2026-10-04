@@ -11,4 +11,8 @@ public interface GameCraftServices {
     StorageService storage();
 
     AiService ai();
+
+    GameSessionManager sessions();
+
+    GameBoardService boards();
 }

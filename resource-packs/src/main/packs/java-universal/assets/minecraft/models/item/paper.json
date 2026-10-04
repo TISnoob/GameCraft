@@ -1,0 +1,1052 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/paper"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 100
+      },
+      "model": "gamecraft:item/chess-white-pawn"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 101
+      },
+      "model": "gamecraft:item/chess-white-knight"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 102
+      },
+      "model": "gamecraft:item/chess-white-bishop"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 103
+      },
+      "model": "gamecraft:item/chess-white-rook"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 104
+      },
+      "model": "gamecraft:item/chess-white-queen"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 105
+      },
+      "model": "gamecraft:item/chess-white-king"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 106
+      },
+      "model": "gamecraft:item/chess-black-pawn"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 107
+      },
+      "model": "gamecraft:item/chess-black-knight"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 108
+      },
+      "model": "gamecraft:item/chess-black-bishop"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 109
+      },
+      "model": "gamecraft:item/chess-black-rook"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 110
+      },
+      "model": "gamecraft:item/chess-black-queen"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 111
+      },
+      "model": "gamecraft:item/chess-black-king"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 201
+      },
+      "model": "gamecraft:item/checkers-red-man"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 202
+      },
+      "model": "gamecraft:item/checkers-red-king"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 203
+      },
+      "model": "gamecraft:item/checkers-black-man"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 204
+      },
+      "model": "gamecraft:item/checkers-black-king"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 301
+      },
+      "model": "gamecraft:item/ludo-red"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 302
+      },
+      "model": "gamecraft:item/ludo-yellow"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 303
+      },
+      "model": "gamecraft:item/ludo-blue"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 304
+      },
+      "model": "gamecraft:item/ludo-green"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 401
+      },
+      "model": "gamecraft:item/chinese-red"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 402
+      },
+      "model": "gamecraft:item/chinese-yellow"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 403
+      },
+      "model": "gamecraft:item/chinese-blue"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 404
+      },
+      "model": "gamecraft:item/chinese-green"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 405
+      },
+      "model": "gamecraft:item/chinese-purple"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 406
+      },
+      "model": "gamecraft:item/chinese-orange"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 501
+      },
+      "model": "gamecraft:item/monopoly-house"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 505
+      },
+      "model": "gamecraft:item/monopoly-hotel"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 506
+      },
+      "model": "gamecraft:item/monopoly-token-red"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 507
+      },
+      "model": "gamecraft:item/monopoly-token-yellow"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 508
+      },
+      "model": "gamecraft:item/monopoly-token-blue"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 509
+      },
+      "model": "gamecraft:item/monopoly-token-green"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 510
+      },
+      "model": "gamecraft:item/monopoly-token-purple"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 511
+      },
+      "model": "gamecraft:item/monopoly-token-white"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 601
+      },
+      "model": "gamecraft:item/uno-draw-pile"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 602
+      },
+      "model": "gamecraft:item/uno-card-0"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 603
+      },
+      "model": "gamecraft:item/uno-card-1"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 604
+      },
+      "model": "gamecraft:item/uno-card-2"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 605
+      },
+      "model": "gamecraft:item/uno-card-3"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 606
+      },
+      "model": "gamecraft:item/uno-card-4"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 607
+      },
+      "model": "gamecraft:item/uno-card-5"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 608
+      },
+      "model": "gamecraft:item/uno-card-6"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 609
+      },
+      "model": "gamecraft:item/uno-card-7"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 610
+      },
+      "model": "gamecraft:item/uno-card-8"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 611
+      },
+      "model": "gamecraft:item/uno-card-9"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 612
+      },
+      "model": "gamecraft:item/uno-card-10"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 613
+      },
+      "model": "gamecraft:item/uno-card-11"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 614
+      },
+      "model": "gamecraft:item/uno-card-12"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 615
+      },
+      "model": "gamecraft:item/uno-card-13"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 616
+      },
+      "model": "gamecraft:item/uno-card-14"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 617
+      },
+      "model": "gamecraft:item/uno-card-15"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 618
+      },
+      "model": "gamecraft:item/uno-card-16"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 619
+      },
+      "model": "gamecraft:item/uno-card-17"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 620
+      },
+      "model": "gamecraft:item/uno-card-18"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 621
+      },
+      "model": "gamecraft:item/uno-card-19"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 622
+      },
+      "model": "gamecraft:item/uno-card-20"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 623
+      },
+      "model": "gamecraft:item/uno-card-21"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 624
+      },
+      "model": "gamecraft:item/uno-card-22"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 625
+      },
+      "model": "gamecraft:item/uno-card-23"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 626
+      },
+      "model": "gamecraft:item/uno-card-24"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 627
+      },
+      "model": "gamecraft:item/uno-card-25"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 628
+      },
+      "model": "gamecraft:item/uno-card-26"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 629
+      },
+      "model": "gamecraft:item/uno-card-27"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 630
+      },
+      "model": "gamecraft:item/uno-card-28"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 631
+      },
+      "model": "gamecraft:item/uno-card-29"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 632
+      },
+      "model": "gamecraft:item/uno-card-30"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 633
+      },
+      "model": "gamecraft:item/uno-card-31"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 634
+      },
+      "model": "gamecraft:item/uno-card-32"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 635
+      },
+      "model": "gamecraft:item/uno-card-33"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 636
+      },
+      "model": "gamecraft:item/uno-card-34"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 637
+      },
+      "model": "gamecraft:item/uno-card-35"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 638
+      },
+      "model": "gamecraft:item/uno-card-36"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 639
+      },
+      "model": "gamecraft:item/uno-card-37"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 640
+      },
+      "model": "gamecraft:item/uno-card-38"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 641
+      },
+      "model": "gamecraft:item/uno-card-39"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 642
+      },
+      "model": "gamecraft:item/uno-card-40"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 643
+      },
+      "model": "gamecraft:item/uno-card-41"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 644
+      },
+      "model": "gamecraft:item/uno-card-42"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 645
+      },
+      "model": "gamecraft:item/uno-card-43"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 646
+      },
+      "model": "gamecraft:item/uno-card-44"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 647
+      },
+      "model": "gamecraft:item/uno-card-45"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 648
+      },
+      "model": "gamecraft:item/uno-card-46"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 649
+      },
+      "model": "gamecraft:item/uno-card-47"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 650
+      },
+      "model": "gamecraft:item/uno-card-48"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 651
+      },
+      "model": "gamecraft:item/uno-card-49"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 652
+      },
+      "model": "gamecraft:item/uno-card-50"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 653
+      },
+      "model": "gamecraft:item/uno-card-51"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 654
+      },
+      "model": "gamecraft:item/uno-card-52"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 655
+      },
+      "model": "gamecraft:item/uno-card-53"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 658
+      },
+      "model": "gamecraft:item/uno-call"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 659
+      },
+      "model": "gamecraft:item/uno-pass"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 660
+      },
+      "model": "gamecraft:item/table-wood"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 701
+      },
+      "model": "gamecraft:item/solitaire-deck"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 702
+      },
+      "model": "gamecraft:item/solitaire-card-0"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 703
+      },
+      "model": "gamecraft:item/solitaire-card-1"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 704
+      },
+      "model": "gamecraft:item/solitaire-card-2"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 705
+      },
+      "model": "gamecraft:item/solitaire-card-3"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 706
+      },
+      "model": "gamecraft:item/solitaire-card-4"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 707
+      },
+      "model": "gamecraft:item/solitaire-card-5"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 708
+      },
+      "model": "gamecraft:item/solitaire-card-6"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 709
+      },
+      "model": "gamecraft:item/solitaire-card-7"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 710
+      },
+      "model": "gamecraft:item/solitaire-card-8"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 711
+      },
+      "model": "gamecraft:item/solitaire-card-9"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 712
+      },
+      "model": "gamecraft:item/solitaire-card-10"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 713
+      },
+      "model": "gamecraft:item/solitaire-card-11"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 714
+      },
+      "model": "gamecraft:item/solitaire-card-12"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 715
+      },
+      "model": "gamecraft:item/solitaire-card-13"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 716
+      },
+      "model": "gamecraft:item/solitaire-card-14"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 717
+      },
+      "model": "gamecraft:item/solitaire-card-15"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 718
+      },
+      "model": "gamecraft:item/solitaire-card-16"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 719
+      },
+      "model": "gamecraft:item/solitaire-card-17"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 720
+      },
+      "model": "gamecraft:item/solitaire-card-18"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 721
+      },
+      "model": "gamecraft:item/solitaire-card-19"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 722
+      },
+      "model": "gamecraft:item/solitaire-card-20"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 723
+      },
+      "model": "gamecraft:item/solitaire-card-21"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 724
+      },
+      "model": "gamecraft:item/solitaire-card-22"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 725
+      },
+      "model": "gamecraft:item/solitaire-card-23"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 726
+      },
+      "model": "gamecraft:item/solitaire-card-24"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 727
+      },
+      "model": "gamecraft:item/solitaire-card-25"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 728
+      },
+      "model": "gamecraft:item/solitaire-card-26"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 729
+      },
+      "model": "gamecraft:item/solitaire-card-27"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 730
+      },
+      "model": "gamecraft:item/solitaire-card-28"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731
+      },
+      "model": "gamecraft:item/solitaire-card-29"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732
+      },
+      "model": "gamecraft:item/solitaire-card-30"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 733
+      },
+      "model": "gamecraft:item/solitaire-card-31"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 734
+      },
+      "model": "gamecraft:item/solitaire-card-32"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 735
+      },
+      "model": "gamecraft:item/solitaire-card-33"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 736
+      },
+      "model": "gamecraft:item/solitaire-card-34"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 737
+      },
+      "model": "gamecraft:item/solitaire-card-35"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 738
+      },
+      "model": "gamecraft:item/solitaire-card-36"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 739
+      },
+      "model": "gamecraft:item/solitaire-card-37"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 740
+      },
+      "model": "gamecraft:item/solitaire-card-38"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 741
+      },
+      "model": "gamecraft:item/solitaire-card-39"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 742
+      },
+      "model": "gamecraft:item/solitaire-card-40"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 743
+      },
+      "model": "gamecraft:item/solitaire-card-41"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 744
+      },
+      "model": "gamecraft:item/solitaire-card-42"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 745
+      },
+      "model": "gamecraft:item/solitaire-card-43"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 746
+      },
+      "model": "gamecraft:item/solitaire-card-44"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 747
+      },
+      "model": "gamecraft:item/solitaire-card-45"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 748
+      },
+      "model": "gamecraft:item/solitaire-card-46"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 749
+      },
+      "model": "gamecraft:item/solitaire-card-47"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 750
+      },
+      "model": "gamecraft:item/solitaire-card-48"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 751
+      },
+      "model": "gamecraft:item/solitaire-card-49"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 752
+      },
+      "model": "gamecraft:item/solitaire-card-50"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 753
+      },
+      "model": "gamecraft:item/solitaire-card-51"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 801
+      },
+      "model": "gamecraft:item/sudoku-1"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 802
+      },
+      "model": "gamecraft:item/sudoku-2"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 803
+      },
+      "model": "gamecraft:item/sudoku-3"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 804
+      },
+      "model": "gamecraft:item/sudoku-4"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 805
+      },
+      "model": "gamecraft:item/sudoku-5"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 806
+      },
+      "model": "gamecraft:item/sudoku-6"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 807
+      },
+      "model": "gamecraft:item/sudoku-7"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 808
+      },
+      "model": "gamecraft:item/sudoku-8"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 809
+      },
+      "model": "gamecraft:item/sudoku-9"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 900
+      },
+      "model": "gamecraft:item/gamecraft-control"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 901
+      },
+      "model": "gamecraft:item/dice"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 902
+      },
+      "model": "gamecraft:item/chess-move-marker"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 903
+      },
+      "model": "gamecraft:item/chess-selected-marker"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 910
+      },
+      "model": "gamecraft:item/table-chess"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 911
+      },
+      "model": "gamecraft:item/table-ludo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 912
+      },
+      "model": "gamecraft:item/table-chinese-checkers"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 913
+      },
+      "model": "gamecraft:item/table-checkers"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 914
+      },
+      "model": "gamecraft:item/table-monopoly"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 915
+      },
+      "model": "gamecraft:item/table-uno"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 916
+      },
+      "model": "gamecraft:item/table-solitaire"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 917
+      },
+      "model": "gamecraft:item/table-sudoku"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 920
+      },
+      "model": "gamecraft:item/chair-chess"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 921
+      },
+      "model": "gamecraft:item/chair-ludo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 922
+      },
+      "model": "gamecraft:item/chair-chinese-checkers"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 923
+      },
+      "model": "gamecraft:item/chair-checkers"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 924
+      },
+      "model": "gamecraft:item/chair-monopoly"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 925
+      },
+      "model": "gamecraft:item/chair-uno"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 926
+      },
+      "model": "gamecraft:item/chair-solitaire"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 927
+      },
+      "model": "gamecraft:item/chair-sudoku"
+    }
+  ]
+}

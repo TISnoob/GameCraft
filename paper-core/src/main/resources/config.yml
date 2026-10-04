@@ -49,10 +49,16 @@ ai:
       model: openai/gpt-4o-mini
 
 resource-pack:
-  enabled: false
+  # The core embeds one Java pack and can serve it itself. Set public-url to the server's
+  # externally reachable URL; players will be prompted automatically when they join.
+  enabled: true
   required: false
-  java-url: ""
-  java-sha1: ""
+  public-url: ""
+  prompt: "Download the GameCraft boards and game pieces?"
+  host:
+    enabled: true
+    bind-address: 0.0.0.0
+    port: 8765
 
 proxy:
   # Set to velocity or bungeecord on backend servers that use a companion.

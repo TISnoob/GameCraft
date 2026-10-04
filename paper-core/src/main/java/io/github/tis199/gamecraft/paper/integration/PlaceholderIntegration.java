@@ -37,6 +37,7 @@ public final class PlaceholderIntegration extends PlaceholderExpansion {
             case "modules_loaded" -> Integer.toString(plugin.moduleManager().loadedModules().size());
             case "player_sitting" -> Boolean.toString(player != null && player.getVehicle() != null);
             case "ai_enabled" -> Boolean.toString(plugin.aiService().isEnabled());
+            case "active_games" -> Integer.toString(plugin.services().sessions().getActiveSessions().size());
             default -> "";
         };
     }

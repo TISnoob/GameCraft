@@ -1,0 +1,68 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/paper"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 301
+      },
+      "model": "gamecraft:item/ludo-red"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 302
+      },
+      "model": "gamecraft:item/ludo-yellow"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 303
+      },
+      "model": "gamecraft:item/ludo-blue"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 304
+      },
+      "model": "gamecraft:item/ludo-green"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 900
+      },
+      "model": "gamecraft:item/gamecraft-control"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 901
+      },
+      "model": "gamecraft:item/dice"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 911
+      },
+      "model": "gamecraft:item/table-ludo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 912
+      },
+      "model": "gamecraft:item/table-chinese-checkers"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 921
+      },
+      "model": "gamecraft:item/chair-ludo"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 922
+      },
+      "model": "gamecraft:item/chair-chinese-checkers"
+    }
+  ]
+}

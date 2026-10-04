@@ -1,0 +1,97 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "entries": [
+      {
+        "threshold": 501,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-house"
+        }
+      },
+      {
+        "threshold": 505,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-hotel"
+        }
+      },
+      {
+        "threshold": 506,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-token-red"
+        }
+      },
+      {
+        "threshold": 507,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-token-yellow"
+        }
+      },
+      {
+        "threshold": 508,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-token-blue"
+        }
+      },
+      {
+        "threshold": 509,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-token-green"
+        }
+      },
+      {
+        "threshold": 510,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-token-purple"
+        }
+      },
+      {
+        "threshold": 511,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/monopoly-token-white"
+        }
+      },
+      {
+        "threshold": 900,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/gamecraft-control"
+        }
+      },
+      {
+        "threshold": 901,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/dice"
+        }
+      },
+      {
+        "threshold": 914,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-monopoly"
+        }
+      },
+      {
+        "threshold": 924,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-monopoly"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/paper"
+    }
+  }
+}

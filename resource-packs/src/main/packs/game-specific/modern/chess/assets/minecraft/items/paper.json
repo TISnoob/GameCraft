@@ -1,0 +1,132 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "entries": [
+      {
+        "threshold": 100,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-white-pawn"
+        }
+      },
+      {
+        "threshold": 101,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-white-knight"
+        }
+      },
+      {
+        "threshold": 102,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-white-bishop"
+        }
+      },
+      {
+        "threshold": 103,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-white-rook"
+        }
+      },
+      {
+        "threshold": 104,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-white-queen"
+        }
+      },
+      {
+        "threshold": 105,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-white-king"
+        }
+      },
+      {
+        "threshold": 106,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-black-pawn"
+        }
+      },
+      {
+        "threshold": 107,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-black-knight"
+        }
+      },
+      {
+        "threshold": 108,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-black-bishop"
+        }
+      },
+      {
+        "threshold": 109,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-black-rook"
+        }
+      },
+      {
+        "threshold": 110,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-black-queen"
+        }
+      },
+      {
+        "threshold": 111,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-black-king"
+        }
+      },
+      {
+        "threshold": 900,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/gamecraft-control"
+        }
+      },
+      {
+        "threshold": 902,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-move-marker"
+        }
+      },
+      {
+        "threshold": 903,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chess-selected-marker"
+        }
+      },
+      {
+        "threshold": 910,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-chess"
+        }
+      },
+      {
+        "threshold": 920,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-chess"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/paper"
+    }
+  }
+}

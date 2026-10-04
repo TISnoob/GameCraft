@@ -1,0 +1,22 @@
+engine:
+  # Stockfish 16 is the default engine target. Install the executable here, or set a direct HTTPS URL below.
+  version: 16
+  path: engines/stockfish-16
+  download-url: ""
+  # Required when download-url is set. Use the SHA-256 of the exact binary file.
+  download-sha256: ""
+  timeout-ms: 15000
+  max-threads: 2
+  max-memory-mb: 128
+  options:
+    threads: 2
+    hash-mb: 128
+  difficulty:
+    easy:
+      move-time-ms: 500
+    medium:
+      move-time-ms: 1500
+    hard:
+      move-time-ms: 3000
+    expert:
+      move-time-ms: 5000

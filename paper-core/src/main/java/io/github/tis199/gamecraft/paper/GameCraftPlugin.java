@@ -10,6 +10,10 @@ import io.github.tis199.gamecraft.paper.module.GameModuleManager;
 import io.github.tis199.gamecraft.paper.platform.PaperGameCraftServices;
 import io.github.tis199.gamecraft.paper.platform.PaperScheduler;
 import io.github.tis199.gamecraft.paper.storage.JdbcStorageService;
+import io.github.tis199.gamecraft.paper.session.GameSessionManagerImpl;
+import io.github.tis199.gamecraft.paper.session.GameRoomManager;
+import io.github.tis199.gamecraft.paper.session.GameBoardServiceImpl;
+import io.github.tis199.gamecraft.paper.resourcepack.ResourcePackService;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.concurrent.ExecutorService;
@@ -21,6 +25,11 @@ public final class GameCraftPlugin extends JavaPlugin {
     private AiServiceImpl aiService;
     private GameModuleManager moduleManager;
     private FurnitureManager furniture;
+    private GameSessionManagerImpl sessionManager;
+    private InventoryMenuService menuService;
+    private GameRoomManager roomManager;
+    private GameBoardServiceImpl boardService;
+    private ResourcePackService resourcePackService;
     private PaperGameCraftServices services;
 
     @Override
@@ -43,12 +52,16 @@ public final class GameCraftPlugin extends JavaPlugin {
         }
 
         aiService = new AiServiceImpl(this, ioExecutor);
-        furniture = new FurnitureManager(this);
-        InventoryMenuService menuService = new InventoryMenuService(this);
         PaperScheduler scheduler = new PaperScheduler(this);
-        services = new PaperGameCraftServices(scheduler, menuService, furniture, storage, aiService);
+        sessionManager = new GameSessionManagerImpl(this, scheduler);
+        boardService = new GameBoardServiceImpl(this, sessionManager, scheduler);
+        furniture = new FurnitureManager(this, scheduler, sessionManager);
+        menuService = new InventoryMenuService(this, scheduler);
+        services = new PaperGameCraftServices(scheduler, menuService, furniture, storage, aiService, sessionManager, boardService);
+        roomManager = new GameRoomManager(sessionManager, furniture);
+        resourcePackService = new ResourcePackService(this);
 
-        GameCraftCommand command = new GameCraftCommand(this, menuService, furniture);
+        GameCraftCommand command = new GameCraftCommand(this, furniture, sessionManager, menuService, roomManager);
         if (getCommand("gamecraft") != null) {
             getCommand("gamecraft").setExecutor(command);
             getCommand("gamecraft").setTabCompleter(command);
@@ -58,16 +71,24 @@ public final class GameCraftPlugin extends JavaPlugin {
         moduleManager.loadCachedModules();
         moduleManager.checkRegistryAsync();
 
+        // Game actions now arrive over gamecraft:client from the required client mod.
+
         if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new PlaceholderIntegration(this).register();
             getLogger().info("PlaceholderAPI integration enabled.");
         }
 
-        getLogger().info("GameCraft core enabled. No game modules are bundled with this release.");
+        getLogger().info("GameCraft core enabled. Install game modules separately and enable them in config.yml.");
     }
 
     @Override
     public void onDisable() {
+        if (sessionManager != null) {
+            sessionManager.close();
+        }
+        if (resourcePackService != null) {
+            resourcePackService.close();
+        }
         if (moduleManager != null) {
             moduleManager.close();
         }
@@ -104,5 +125,9 @@ public final class GameCraftPlugin extends JavaPlugin {
 
     public AiServiceImpl aiService() {
         return aiService;
+    }
+
+    public GameBoardServiceImpl boardService() {
+        return boardService;
     }
 }

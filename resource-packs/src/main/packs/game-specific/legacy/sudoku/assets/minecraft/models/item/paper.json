@@ -1,0 +1,80 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/paper"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 801
+      },
+      "model": "gamecraft:item/sudoku-1"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 802
+      },
+      "model": "gamecraft:item/sudoku-2"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 803
+      },
+      "model": "gamecraft:item/sudoku-3"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 804
+      },
+      "model": "gamecraft:item/sudoku-4"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 805
+      },
+      "model": "gamecraft:item/sudoku-5"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 806
+      },
+      "model": "gamecraft:item/sudoku-6"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 807
+      },
+      "model": "gamecraft:item/sudoku-7"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 808
+      },
+      "model": "gamecraft:item/sudoku-8"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 809
+      },
+      "model": "gamecraft:item/sudoku-9"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 900
+      },
+      "model": "gamecraft:item/gamecraft-control"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 917
+      },
+      "model": "gamecraft:item/table-sudoku"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 927
+      },
+      "model": "gamecraft:item/chair-sudoku"
+    }
+  ]
+}

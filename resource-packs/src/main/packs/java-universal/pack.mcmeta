@@ -1,0 +1,18 @@
+{
+  "pack": {
+    "pack_format": 15,
+    "supported_formats": {
+      "min_inclusive": 15,
+      "max_inclusive": 57
+    },
+    "min_format": [
+      15,
+      0
+    ],
+    "max_format": [
+      97,
+      1
+    ],
+    "description": "GameCraft 3D boards and tabletop pieces (Java 1.20\u201326.3)"
+  }
+}

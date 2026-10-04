@@ -1,0 +1,344 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/paper"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 701
+      },
+      "model": "gamecraft:item/solitaire-deck"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 702
+      },
+      "model": "gamecraft:item/solitaire-card-0"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 703
+      },
+      "model": "gamecraft:item/solitaire-card-1"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 704
+      },
+      "model": "gamecraft:item/solitaire-card-2"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 705
+      },
+      "model": "gamecraft:item/solitaire-card-3"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 706
+      },
+      "model": "gamecraft:item/solitaire-card-4"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 707
+      },
+      "model": "gamecraft:item/solitaire-card-5"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 708
+      },
+      "model": "gamecraft:item/solitaire-card-6"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 709
+      },
+      "model": "gamecraft:item/solitaire-card-7"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 710
+      },
+      "model": "gamecraft:item/solitaire-card-8"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 711
+      },
+      "model": "gamecraft:item/solitaire-card-9"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 712
+      },
+      "model": "gamecraft:item/solitaire-card-10"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 713
+      },
+      "model": "gamecraft:item/solitaire-card-11"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 714
+      },
+      "model": "gamecraft:item/solitaire-card-12"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 715
+      },
+      "model": "gamecraft:item/solitaire-card-13"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 716
+      },
+      "model": "gamecraft:item/solitaire-card-14"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 717
+      },
+      "model": "gamecraft:item/solitaire-card-15"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 718
+      },
+      "model": "gamecraft:item/solitaire-card-16"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 719
+      },
+      "model": "gamecraft:item/solitaire-card-17"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 720
+      },
+      "model": "gamecraft:item/solitaire-card-18"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 721
+      },
+      "model": "gamecraft:item/solitaire-card-19"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 722
+      },
+      "model": "gamecraft:item/solitaire-card-20"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 723
+      },
+      "model": "gamecraft:item/solitaire-card-21"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 724
+      },
+      "model": "gamecraft:item/solitaire-card-22"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 725
+      },
+      "model": "gamecraft:item/solitaire-card-23"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 726
+      },
+      "model": "gamecraft:item/solitaire-card-24"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 727
+      },
+      "model": "gamecraft:item/solitaire-card-25"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 728
+      },
+      "model": "gamecraft:item/solitaire-card-26"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 729
+      },
+      "model": "gamecraft:item/solitaire-card-27"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 730
+      },
+      "model": "gamecraft:item/solitaire-card-28"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 731
+      },
+      "model": "gamecraft:item/solitaire-card-29"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 732
+      },
+      "model": "gamecraft:item/solitaire-card-30"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 733
+      },
+      "model": "gamecraft:item/solitaire-card-31"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 734
+      },
+      "model": "gamecraft:item/solitaire-card-32"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 735
+      },
+      "model": "gamecraft:item/solitaire-card-33"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 736
+      },
+      "model": "gamecraft:item/solitaire-card-34"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 737
+      },
+      "model": "gamecraft:item/solitaire-card-35"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 738
+      },
+      "model": "gamecraft:item/solitaire-card-36"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 739
+      },
+      "model": "gamecraft:item/solitaire-card-37"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 740
+      },
+      "model": "gamecraft:item/solitaire-card-38"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 741
+      },
+      "model": "gamecraft:item/solitaire-card-39"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 742
+      },
+      "model": "gamecraft:item/solitaire-card-40"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 743
+      },
+      "model": "gamecraft:item/solitaire-card-41"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 744
+      },
+      "model": "gamecraft:item/solitaire-card-42"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 745
+      },
+      "model": "gamecraft:item/solitaire-card-43"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 746
+      },
+      "model": "gamecraft:item/solitaire-card-44"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 747
+      },
+      "model": "gamecraft:item/solitaire-card-45"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 748
+      },
+      "model": "gamecraft:item/solitaire-card-46"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 749
+      },
+      "model": "gamecraft:item/solitaire-card-47"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 750
+      },
+      "model": "gamecraft:item/solitaire-card-48"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 751
+      },
+      "model": "gamecraft:item/solitaire-card-49"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 752
+      },
+      "model": "gamecraft:item/solitaire-card-50"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 753
+      },
+      "model": "gamecraft:item/solitaire-card-51"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 900
+      },
+      "model": "gamecraft:item/gamecraft-control"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 916
+      },
+      "model": "gamecraft:item/table-solitaire"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 926
+      },
+      "model": "gamecraft:item/chair-solitaire"
+    }
+  ]
+}

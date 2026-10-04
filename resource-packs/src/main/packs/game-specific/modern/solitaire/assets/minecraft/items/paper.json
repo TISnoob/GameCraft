@@ -1,0 +1,405 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "entries": [
+      {
+        "threshold": 701,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-deck"
+        }
+      },
+      {
+        "threshold": 702,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-0"
+        }
+      },
+      {
+        "threshold": 703,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-1"
+        }
+      },
+      {
+        "threshold": 704,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-2"
+        }
+      },
+      {
+        "threshold": 705,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-3"
+        }
+      },
+      {
+        "threshold": 706,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-4"
+        }
+      },
+      {
+        "threshold": 707,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-5"
+        }
+      },
+      {
+        "threshold": 708,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-6"
+        }
+      },
+      {
+        "threshold": 709,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-7"
+        }
+      },
+      {
+        "threshold": 710,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-8"
+        }
+      },
+      {
+        "threshold": 711,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-9"
+        }
+      },
+      {
+        "threshold": 712,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-10"
+        }
+      },
+      {
+        "threshold": 713,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-11"
+        }
+      },
+      {
+        "threshold": 714,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-12"
+        }
+      },
+      {
+        "threshold": 715,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-13"
+        }
+      },
+      {
+        "threshold": 716,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-14"
+        }
+      },
+      {
+        "threshold": 717,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-15"
+        }
+      },
+      {
+        "threshold": 718,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-16"
+        }
+      },
+      {
+        "threshold": 719,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-17"
+        }
+      },
+      {
+        "threshold": 720,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-18"
+        }
+      },
+      {
+        "threshold": 721,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-19"
+        }
+      },
+      {
+        "threshold": 722,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-20"
+        }
+      },
+      {
+        "threshold": 723,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-21"
+        }
+      },
+      {
+        "threshold": 724,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-22"
+        }
+      },
+      {
+        "threshold": 725,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-23"
+        }
+      },
+      {
+        "threshold": 726,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-24"
+        }
+      },
+      {
+        "threshold": 727,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-25"
+        }
+      },
+      {
+        "threshold": 728,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-26"
+        }
+      },
+      {
+        "threshold": 729,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-27"
+        }
+      },
+      {
+        "threshold": 730,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-28"
+        }
+      },
+      {
+        "threshold": 731,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-29"
+        }
+      },
+      {
+        "threshold": 732,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-30"
+        }
+      },
+      {
+        "threshold": 733,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-31"
+        }
+      },
+      {
+        "threshold": 734,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-32"
+        }
+      },
+      {
+        "threshold": 735,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-33"
+        }
+      },
+      {
+        "threshold": 736,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-34"
+        }
+      },
+      {
+        "threshold": 737,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-35"
+        }
+      },
+      {
+        "threshold": 738,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-36"
+        }
+      },
+      {
+        "threshold": 739,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-37"
+        }
+      },
+      {
+        "threshold": 740,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-38"
+        }
+      },
+      {
+        "threshold": 741,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-39"
+        }
+      },
+      {
+        "threshold": 742,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-40"
+        }
+      },
+      {
+        "threshold": 743,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-41"
+        }
+      },
+      {
+        "threshold": 744,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-42"
+        }
+      },
+      {
+        "threshold": 745,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-43"
+        }
+      },
+      {
+        "threshold": 746,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-44"
+        }
+      },
+      {
+        "threshold": 747,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-45"
+        }
+      },
+      {
+        "threshold": 748,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-46"
+        }
+      },
+      {
+        "threshold": 749,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-47"
+        }
+      },
+      {
+        "threshold": 750,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-48"
+        }
+      },
+      {
+        "threshold": 751,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-49"
+        }
+      },
+      {
+        "threshold": 752,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-50"
+        }
+      },
+      {
+        "threshold": 753,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/solitaire-card-51"
+        }
+      },
+      {
+        "threshold": 900,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/gamecraft-control"
+        }
+      },
+      {
+        "threshold": 916,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/table-solitaire"
+        }
+      },
+      {
+        "threshold": 926,
+        "model": {
+          "type": "minecraft:model",
+          "model": "gamecraft:item/chair-solitaire"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/paper"
+    }
+  }
+}
