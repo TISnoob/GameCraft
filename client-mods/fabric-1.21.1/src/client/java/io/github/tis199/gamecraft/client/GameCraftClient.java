@@ -65,7 +65,7 @@ public final class GameCraftClient implements ClientModInitializer {
     private static GameSceneState nearestScene(String world, double x, double z) {
         return SCENES.values().stream()
                 .filter(scene -> scene.world().equals(world))
-                .filter(scene -> Math.abs(x - scene.x()) <= 4.6 && Math.abs(z - scene.z()) <= 4.6)
+                .filter(scene -> Math.abs(x - scene.x()) <= 1.6 && Math.abs(z - scene.z()) <= 1.6)
                 .min(java.util.Comparator.comparingDouble(scene -> squared(x - scene.x(), z - scene.z())))
                 .orElse(null);
     }

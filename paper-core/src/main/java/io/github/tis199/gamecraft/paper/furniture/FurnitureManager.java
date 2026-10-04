@@ -7,7 +7,9 @@ import io.github.tis199.gamecraft.api.GameLocation;
 import io.github.tis199.gamecraft.paper.GameCraftPlugin;
 import io.github.tis199.gamecraft.paper.platform.PaperScheduler;
 import io.github.tis199.gamecraft.paper.session.GameSessionManagerImpl;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -25,6 +27,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Comparator;
@@ -46,6 +51,7 @@ public final class FurnitureManager implements FurnitureService, Listener, AutoC
     private final GameSessionManagerImpl sessions;
     private final NamespacedKey furnitureKey;
     private final NamespacedKey kindKey;
+    private final NamespacedKey tableItemKey;
     private final Map<UUID, GameLocation> locations = new ConcurrentHashMap<>();
     private final Map<UUID, GameLocation> tableOrigins = new ConcurrentHashMap<>();
     private final Map<UUID, String> tableGames = new ConcurrentHashMap<>();
@@ -62,8 +68,17 @@ public final class FurnitureManager implements FurnitureService, Listener, AutoC
         this.sessions = sessions;
         this.furnitureKey = new NamespacedKey(plugin, "furniture-id");
         this.kindKey = new NamespacedKey(plugin, "furniture-kind");
+        this.tableItemKey = new NamespacedKey(plugin, "table-item");
         Bukkit.getMessenger().registerOutgoingPluginChannel(plugin, FURNITURE_CHANNEL);
         Bukkit.getPluginManager().registerEvents(this, plugin);
+    }
+
+    private static String title(String id) {
+        return switch (id) {
+            case "uno" -> "UNO";
+            case "chinese-checkers" -> "Chinese Checkers";
+            default -> id.substring(0, 1).toUpperCase(java.util.Locale.ROOT) + id.substring(1);
+        };
     }
 
     @Override
@@ -78,6 +93,34 @@ public final class FurnitureManager implements FurnitureService, Listener, AutoC
         placeTableBlocks(furnitureId, target, width, depth, top, null);
         publishFurniture();
         return furnitureId;
+    }
+
+    /** Gives a table item which is placeable in-world; tables have no crafting recipe. */
+    public void giveTableItem(Player recipient, String gameId) {
+        TableStyle style = TableStyle.forGame(gameId);
+        ItemStack item = new ItemStack(Material.PAPER);
+        ItemMeta meta = item.getItemMeta();
+        meta.displayName(Component.text(title(style.id()) + " Table"));
+        meta.setCustomModelData(tableModelId(style.id()));
+        meta.getPersistentDataContainer().set(tableItemKey, PersistentDataType.STRING, style.id());
+        item.setItemMeta(meta);
+        Map<Integer, ItemStack> overflow = recipient.getInventory().addItem(item);
+        overflow.values().forEach(stack ->
+                recipient.getWorld().dropItemNaturally(recipient.getLocation(), stack));
+    }
+
+    private static int tableModelId(String gameId) {
+        return switch (gameId) {
+            case "chess" -> 910;
+            case "ludo" -> 911;
+            case "chinese-checkers" -> 912;
+            case "checkers" -> 913;
+            case "monopoly" -> 914;
+            case "uno" -> 915;
+            case "solitaire" -> 916;
+            case "sudoku" -> 917;
+            default -> throw new IllegalArgumentException("No GameCraft table style is defined for '" + gameId + "'");
+        };
     }
 
     /** Per-game footprints follow the texture/model dimensions used by the client renderer. */
@@ -408,6 +451,31 @@ public final class FurnitureManager implements FurnitureService, Listener, AutoC
     public void onFurnitureInteract(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getClickedBlock() == null) return;
         Player player = event.getPlayer();
+        if (event.getHand() == EquipmentSlot.HAND) {
+            ItemStack held = event.getItem();
+            if (held != null) {
+                String tableGame = held.getItemMeta().getPersistentDataContainer()
+                        .get(tableItemKey, PersistentDataType.STRING);
+                if (tableGame != null) {
+                    event.setCancelled(true);
+                    try {
+                        TableStyle.forGame(tableGame);
+                        Block placement = event.getClickedBlock().getRelative(event.getBlockFace());
+                        placeGameTable(tableGame, new GameLocation(placement.getWorld().getUID(),
+                                placement.getX(), placement.getY(), placement.getZ()));
+                        if (player.getGameMode() != GameMode.CREATIVE) {
+                            ItemStack handItem = player.getInventory().getItemInMainHand();
+                            if (handItem.getAmount() <= 1) player.getInventory().setItemInMainHand(null);
+                            else handItem.setAmount(handItem.getAmount() - 1);
+                        }
+                    } catch (IllegalArgumentException exception) {
+                        plugin.getLogger().warning("Ignored invalid GameCraft table item: " + exception.getMessage());
+                        player.sendMessage(Component.text("That GameCraft table item is invalid."));
+                    }
+                    return;
+                }
+            }
+        }
         BlockKey key = BlockKey.of(event.getClickedBlock());
         UUID chairId = chairsByBlock.get(key);
         UUID tableId = tablesByBlock.get(key);
@@ -434,8 +502,8 @@ public final class FurnitureManager implements FurnitureService, Listener, AutoC
     }
 
     private static void validateDimensions(int width, int depth) {
-        if (width < 1 || width > 16 || depth < 1 || depth > 16) {
-            throw new IllegalArgumentException("Furniture dimensions must be between 1 and 16 blocks");
+        if (width < 1 || width > 3 || depth < 1 || depth > 3) {
+            throw new IllegalArgumentException("Game tables must be between 1 and 3 blocks wide and deep");
         }
     }
 
@@ -467,11 +535,9 @@ public final class FurnitureManager implements FurnitureService, Listener, AutoC
         private static TableStyle forGame(String gameId) {
             String id = gameId == null ? "" : gameId.toLowerCase(java.util.Locale.ROOT);
             return switch (id) {
-                case "chess", "checkers" -> new TableStyle(id, 6, 6);
-                case "ludo", "chinese-checkers", "monopoly" -> new TableStyle(id, 7, 7);
-                case "uno" -> new TableStyle(id, 6, 4);
-                case "solitaire" -> new TableStyle(id, 5, 4);
-                case "sudoku" -> new TableStyle(id, 5, 5);
+                case "chess", "checkers", "ludo", "chinese-checkers", "monopoly", "sudoku" ->
+                        new TableStyle(id, 3, 3);
+                case "uno", "solitaire" -> new TableStyle(id, 3, 2);
                 default -> throw new IllegalArgumentException("No GameCraft table style is defined for '" + gameId + "'");
             };
         }

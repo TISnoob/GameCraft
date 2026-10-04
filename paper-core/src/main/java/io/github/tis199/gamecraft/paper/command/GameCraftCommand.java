@@ -152,20 +152,37 @@ public final class GameCraftCommand implements CommandExecutor, TabCompleter {
     private void openGamePicker(Player player) {
         List<GameModule> available = plugin.moduleManager().loadedModules().stream()
                 .sorted(java.util.Comparator.comparing(module -> module.descriptor().displayName())).toList();
+        List<MenuOption> options = new ArrayList<>();
+        int pendingInvites = rooms.pendingInvites(player).size();
+        options.add(option("lobby:invites",
+                pendingInvites == 0 ? "<aqua>Multiplayer invitations</aqua>"
+                        : "<gold>Multiplayer invitations (" + pendingInvites + ")</gold>",
+                pendingInvites == 0 ? "View invitations from friends." : "Accept an invitation to join a friend's room."));
+        options.add(option("lobby:room", "<yellow>Room and lobby</yellow>",
+                "Invite players, check seats, start, or leave a room."));
         if (available.isEmpty()) {
-            tell(player, "<gold><bold>✦ GAMECRAFT</bold></gold> <gray>No games are installed yet.</gray>");
-            tell(player, "<gray>Server owners can add game packs from the configured GameCraft release manifest.</gray>");
-            return;
+            options.add(option("info:no-games", "<gray>No games are installed</gray>",
+                    "The server owner can install game modules."));
         }
-        List<MenuOption> options = available.stream().map(module -> new MenuOption(
-                "game:" + module.descriptor().id(), "<yellow><bold>" + safe(module.descriptor().displayName()) + "</bold></yellow>",
-                List.of("<gray>" + safe(module.descriptor().description()) + "</gray>",
-                        "<dark_gray>Players: " + module.minPlayers() + "–" + module.maxPlayers() + "</dark_gray>"))).toList();
+        for (GameModule module : available) {
+            options.add(new MenuOption("game:" + module.descriptor().id(),
+                    "<yellow><bold>" + safe(module.descriptor().displayName()) + "</bold></yellow>",
+                    List.of("<gray>" + safe(module.descriptor().description()) + "</gray>",
+                            "<dark_gray>Players: " + module.minPlayers() + "–" + module.maxPlayers() + "</dark_gray>")));
+        }
         menus.open(player.getUniqueId(), new MenuDefinition("game-picker", "<gold><bold>✦ Pick a game</bold></gold>", options),
                 choice -> onGameMenuChoice(player.getUniqueId(), choice));
     }
 
     private void onGameMenuChoice(UUID playerId, String choice) {
+        if (choice.equals("lobby:invites")) {
+            openInvitationsMenu(playerId);
+            return;
+        }
+        if (choice.equals("lobby:room")) {
+            openRoomMenu(playerId);
+            return;
+        }
         if (!choice.startsWith("game:")) return;
         GameModule module = plugin.moduleManager().getModule(choice.substring(5)).orElse(null);
         Player player = Bukkit.getPlayer(playerId);
@@ -178,7 +195,8 @@ public final class GameCraftCommand implements CommandExecutor, TabCompleter {
         List<MenuOption> options = new ArrayList<>();
         if (module.minPlayers() <= 1) options.add(option("mode:solo", "<green>Solo adventure</green>", "Play on your own."));
         if (module.supportsComputer()) options.add(option("mode:computer", "<light_purple>Challenge the computer</light_purple>", "Choose a difficulty and side."));
-        if (module.maxPlayers() >= 2) options.add(option("mode:room", "<aqua>Host a room</aqua>", "Invite friends and choose your seats."));
+        if (module.maxPlayers() >= 2) options.add(option("mode:room", "<aqua>Host multiplayer room</aqua>",
+                "Invite friends, choose the seats, then start together."));
         if (options.isEmpty()) {
             drafts.remove(playerId);
             tell(player, "<red>This game pack does not provide a playable mode yet.</red>");
@@ -304,6 +322,119 @@ public final class GameCraftCommand implements CommandExecutor, TabCompleter {
         }
     }
 
+    private void openInvitationsMenu(UUID playerId) {
+        Player player = Bukkit.getPlayer(playerId);
+        if (player == null) return;
+        List<GameRoomManager.InviteView> invites = rooms.pendingInvites(player);
+        if (invites.isEmpty()) {
+            openMenu(playerId, "<gold>✦ Multiplayer invitations</gold>",
+                    List.of(option("info:no-invites", "<gray>No pending invitations</gray>",
+                            "When a friend invites you, accept it here.")),
+                    ignored -> { });
+            return;
+        }
+        List<MenuOption> options = invites.stream().map(invite -> option("accept:" + invite.hostId(),
+                "<green>Join " + safe(invite.hostName()) + "'s " + safe(capitalize(invite.gameId())) + " room</green>",
+                invite.joined() + "/" + invite.capacity() + " players joined.")).toList();
+        openMenu(playerId, "<gold>✦ Multiplayer invitations</gold>", options, selected -> {
+            if (!selected.startsWith("accept:")) return;
+            try {
+                rooms.accept(player, UUID.fromString(selected.substring("accept:".length())));
+                openRoomMenu(playerId);
+            } catch (IllegalArgumentException | IllegalStateException exception) {
+                tell(player, exception.getMessage());
+            }
+        });
+    }
+
+    private void openRoomMenu(UUID playerId) {
+        Player player = Bukkit.getPlayer(playerId);
+        if (player == null) return;
+        GameRoomManager.RoomView room = rooms.roomView(player);
+        if (room == null) {
+            openMenu(playerId, "<gold>✦ Multiplayer room</gold>", List.of(
+                    option("info:no-room", "<gray>You're not in a room</gray>",
+                            "Choose a game and select Host multiplayer room to invite friends.")),
+                    ignored -> { });
+            return;
+        }
+
+        List<MenuOption> options = new ArrayList<>();
+        Player host = Bukkit.getPlayer(room.hostId());
+        options.add(option("info:room",
+                "<aqua>" + safe(capitalize(room.gameId())) + " • " + room.joined() + "/" + room.capacity()
+                        + (room.teamMode() ? " • 2 vs 2" : "") + "</aqua>",
+                room.host() ? "You are hosting. Invite players to fill the room."
+                        : "Room host: " + safe(host == null ? "offline" : host.getName())));
+        if (room.host()) {
+            options.add(option("room:invite", "<green>Invite online players</green>",
+                    "Choose a player who is not already in a game."));
+            options.add(option("room:start", "<gold>Start multiplayer game</gold>",
+                    "Starts when all seats are filled."));
+            options.add(option("room:cancel", "<red>Cancel room</red>", "Close this room and notify its players."));
+        } else {
+            options.add(option("room:leave", "<red>Leave room</red>", "Leave before the host starts the game."));
+        }
+        openMenu(playerId, "<gold>✦ Multiplayer room</gold>", options,
+                selected -> onRoomMenuChoice(playerId, selected));
+    }
+
+    private void openInviteCandidates(UUID playerId) {
+        Player player = Bukkit.getPlayer(playerId);
+        if (player == null) return;
+        List<GameRoomManager.InviteCandidate> candidates;
+        try {
+            candidates = rooms.onlineInviteCandidates(player);
+        } catch (IllegalArgumentException | IllegalStateException exception) {
+            tell(player, exception.getMessage());
+            return;
+        }
+        if (candidates.isEmpty()) {
+            openMenu(playerId, "<gold>✦ Invite players</gold>", List.of(
+                    option("info:no-candidates", "<gray>No players available to invite</gray>",
+                            "Players already in a game or in this room cannot be invited.")),
+                    ignored -> openRoomMenu(playerId));
+            return;
+        }
+        List<MenuOption> options = candidates.stream().map(candidate -> option("invite:" + candidate.playerId(),
+                "<yellow>" + safe(candidate.name()) + "</yellow>", "Invite this online player.")).toList();
+        openMenu(playerId, "<gold>✦ Invite online players</gold>", options, selected -> {
+            if (!selected.startsWith("invite:")) return;
+            try {
+                rooms.invite(player, UUID.fromString(selected.substring("invite:".length())));
+                openRoomMenu(playerId);
+            } catch (IllegalArgumentException | IllegalStateException exception) {
+                tell(player, exception.getMessage());
+            }
+        });
+    }
+
+    private void onRoomMenuChoice(UUID playerId, String choice) {
+        Player player = Bukkit.getPlayer(playerId);
+        if (player == null) return;
+        try {
+            switch (choice) {
+                case "room:invite" -> openInviteCandidates(playerId);
+                case "room:start" -> {
+                    rooms.start(player);
+                    tell(player, "<green>✦ Multiplayer game started.</green>");
+                }
+                case "room:cancel" -> {
+                    rooms.cancel(player);
+                    tell(player, "<gray>Room cancelled.</gray>");
+                    openGamePicker(player);
+                }
+                case "room:leave" -> {
+                    rooms.leave(player);
+                    openGamePicker(player);
+                }
+                default -> { }
+            }
+        } catch (IllegalArgumentException | IllegalStateException exception) {
+            tell(player, exception.getMessage());
+        }
+    }
+
     private void legacyPlay(Player player, String[] args) {
         if (args.length < 3) {
             openGamePicker(player);
@@ -348,8 +479,31 @@ public final class GameCraftCommand implements CommandExecutor, TabCompleter {
             tell(sender, "<yellow>Furniture placement requires an in-game player.</yellow>");
             return;
         }
-        if (args.length < 2 || !(args[1].equalsIgnoreCase("table") || args[1].equalsIgnoreCase("chair"))) {
-            tell(sender, "<yellow>Usage: /gc furniture table ‹game› | chair [‹game›]</yellow>");
+        if (args.length < 2) {
+            tell(sender, "<yellow>Usage: /gc furniture table ‹game› | chair [‹game›] | give ‹game› [player]</yellow>");
+            return;
+        }
+        if (args[1].equalsIgnoreCase("give")) {
+            if (args.length < 3) {
+                tell(player, "<yellow>Usage: /gc furniture give ‹game› [player]</yellow>");
+                return;
+            }
+            Player recipient = args.length > 3 ? Bukkit.getPlayerExact(args[3]) : player;
+            if (recipient == null) {
+                tell(player, "<red>That player is not online.</red>");
+                return;
+            }
+            try {
+                furniture.giveTableItem(recipient, args[2].toLowerCase(Locale.ROOT));
+                tell(player, "<green>✦ Gave a " + safe(capitalize(args[2])) + " table item to "
+                        + safe(recipient.getName()) + ".</green>");
+            } catch (IllegalArgumentException exception) {
+                tell(player, "<red>" + safe(exception.getMessage()) + "</red>");
+            }
+            return;
+        }
+        if (!(args[1].equalsIgnoreCase("table") || args[1].equalsIgnoreCase("chair"))) {
+            tell(sender, "<yellow>Usage: /gc furniture table ‹game› | chair [‹game›] | give ‹game› [player]</yellow>");
             return;
         }
         String gameId = args.length > 2 ? args[2].toLowerCase(Locale.ROOT) : null;
@@ -397,8 +551,12 @@ public final class GameCraftCommand implements CommandExecutor, TabCompleter {
     }
 
     private void invite(CommandSender sender, String[] args) {
-        if (!(sender instanceof Player player) || args.length < 2) {
-            tell(sender, "<yellow>Usage: /gc invite ‹player›</yellow>");
+        if (!(sender instanceof Player player)) {
+            tell(sender, "<yellow>Open <gold>/gc play</gold> in-game to invite players.</yellow>");
+            return;
+        }
+        if (args.length < 2) {
+            openRoomMenu(player.getUniqueId());
             return;
         }
         try { rooms.invite(player, args[1]); }
@@ -408,6 +566,10 @@ public final class GameCraftCommand implements CommandExecutor, TabCompleter {
     private void accept(CommandSender sender, String[] args) {
         if (!(sender instanceof Player player)) {
             tell(sender, "<yellow>Accept invitations in-game.</yellow>");
+            return;
+        }
+        if (args.length == 1) {
+            openInvitationsMenu(player.getUniqueId());
             return;
         }
         try { rooms.accept(player, args.length > 1 ? args[1] : null); }
@@ -424,7 +586,10 @@ public final class GameCraftCommand implements CommandExecutor, TabCompleter {
     }
 
     private void roomStatus(CommandSender sender) {
-        if (sender instanceof Player player) rooms.show(player);
+        if (sender instanceof Player player) {
+            rooms.show(player);
+            openRoomMenu(player.getUniqueId());
+        }
         else tell(sender, "<yellow>Room status is available in-game.</yellow>");
     }
 
@@ -444,6 +609,7 @@ public final class GameCraftCommand implements CommandExecutor, TabCompleter {
         tell(sender, "<yellow>/gc status</yellow> <gray>View active modules • /gc sit • /gc stand • /gc forfeit</gray>");
         if (sender.hasPermission("gamecraft.admin")) {
             tell(sender, "<yellow>/gc furniture table ‹game›</yellow> <gray>Place the matching 3D table</gray>");
+            tell(sender, "<yellow>/gc furniture give ‹game› [player]</yellow> <gray>Give a placeable table item (no recipe)</gray>");
             tell(sender, "<yellow>/gc furniture chair [‹game›] • /gc reload • /gc enable|disable ‹id›</yellow>");
         }
     }
@@ -499,10 +665,16 @@ public final class GameCraftCommand implements CommandExecutor, TabCompleter {
             return Bukkit.getOnlinePlayers().stream().map(Player::getName)
                     .filter(name -> name.toLowerCase(Locale.ROOT).startsWith(args[args.length - 1].toLowerCase(Locale.ROOT))).toList();
         }
-        if (args[0].equalsIgnoreCase("furniture") && args.length == 2) return List.of("table", "chair");
-        if (args[0].equalsIgnoreCase("furniture") && args.length == 3) {
+        if (args[0].equalsIgnoreCase("furniture") && args.length == 2) return List.of("table", "chair", "give");
+        if (args[0].equalsIgnoreCase("furniture") && args.length == 3
+                && (args[1].equalsIgnoreCase("table") || args[1].equalsIgnoreCase("chair")
+                || args[1].equalsIgnoreCase("give"))) {
             return plugin.moduleManager().loadedModules().stream().map(module -> module.descriptor().id())
                     .filter(id -> id.startsWith(args[2].toLowerCase(Locale.ROOT))).toList();
+        }
+        if (args[0].equalsIgnoreCase("furniture") && args.length == 4 && args[1].equalsIgnoreCase("give")) {
+            return Bukkit.getOnlinePlayers().stream().map(Player::getName)
+                    .filter(name -> name.toLowerCase(Locale.ROOT).startsWith(args[3].toLowerCase(Locale.ROOT))).toList();
         }
         if (args[0].equalsIgnoreCase("play") && args.length == 2) {
             return plugin.moduleManager().loadedModules().stream().map(module -> module.descriptor().id())

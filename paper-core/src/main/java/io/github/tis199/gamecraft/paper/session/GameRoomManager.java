@@ -23,6 +23,10 @@ public final class GameRoomManager {
     private static final MiniMessage MINI = MiniMessage.miniMessage();
     private static final long EXPIRY_SECONDS = 15 * 60;
 
+    public record InviteView(UUID hostId, String hostName, String gameId, int joined, int capacity) { }
+    public record InviteCandidate(UUID playerId, String name) { }
+    public record RoomView(UUID hostId, String gameId, int joined, int capacity, boolean host, boolean teamMode) { }
+
     private final GameSessionManagerImpl sessions;
     private final FurnitureManager furniture;
     private final Map<UUID, Room> byHost = new ConcurrentHashMap<>();
@@ -40,6 +44,10 @@ public final class GameRoomManager {
         if (sessions.getPlayerSession(hostId).isPresent()) {
             throw new IllegalStateException("<red>Finish your current game before hosting another.</red>");
         }
+        Room membership = roomFor(hostId);
+        if (membership != null && !membership.host.equals(hostId)) {
+            throw new IllegalStateException("<red>Leave the room you're in before hosting another.</red>");
+        }
         Room previous = byHost.get(hostId);
         if (previous != null) remove(previous);
         if (seats < module.minPlayers() || seats > module.maxPlayers()) {
@@ -53,6 +61,9 @@ public final class GameRoomManager {
         Room room = new Room(hostId, module.descriptor().id(), seats, difficulty, teams, hostSeat);
         room.players.add(hostId);
         byHost.put(hostId, room);
+        UUID oldInvite = invites.remove(hostId);
+        Room oldInviteRoom = oldInvite == null ? null : byHost.get(oldInvite);
+        if (oldInviteRoom != null) oldInviteRoom.invited.remove(hostId);
         tell(host, "<gold>✦ Room created!</gold> <gray>" + escape(module.descriptor().displayName())
                 + " • " + seats + " seats • " + escape(difficulty) + (teams ? " • <aqua>2v2 teams</aqua>" : "")
                 + "</gray>");
@@ -60,9 +71,15 @@ public final class GameRoomManager {
     }
 
     public void invite(Player host, String targetName) {
+        Player target = Bukkit.getPlayerExact(targetName);
+        if (target == null) throw new IllegalArgumentException("<red>That player is not online.</red>");
+        invite(host, target.getUniqueId());
+    }
+
+    public void invite(Player host, UUID targetId) {
         expireOldRooms();
         Room room = requireHostRoom(host.getUniqueId());
-        Player target = Bukkit.getPlayerExact(targetName);
+        Player target = Bukkit.getPlayer(targetId);
         if (target == null) throw new IllegalArgumentException("<red>That player is not online.</red>");
         if (target.getUniqueId().equals(host.getUniqueId())) {
             throw new IllegalArgumentException("<gray>You're already in your room.</gray>");
@@ -70,17 +87,26 @@ public final class GameRoomManager {
         if (room.players.contains(target.getUniqueId())) {
             throw new IllegalArgumentException("<yellow>That player has already joined.</yellow>");
         }
+        if (roomFor(target.getUniqueId()) != null) {
+            throw new IllegalStateException("<red>That player is already in a multiplayer room.</red>");
+        }
         if (room.players.size() >= room.capacity) {
             throw new IllegalStateException("<red>Your room is full.</red>");
         }
         if (sessions.getPlayerSession(target.getUniqueId()).isPresent()) {
             throw new IllegalStateException("<red>That player is already in a game.</red>");
         }
-        UUID existing = invites.put(target.getUniqueId(), room.host);
+        UUID existing = invites.get(target.getUniqueId());
         if (existing != null && !existing.equals(room.host)) {
+            Room previousRoom = byHost.get(existing);
+            if (previousRoom != null) {
+                previousRoom.invited.remove(target.getUniqueId());
+                previousRoom.updatedAt = Instant.now().getEpochSecond();
+            }
             tell(Bukkit.getPlayer(existing), "<gray>Your invitation to <white>" + escape(target.getName())
                     + "</white> was replaced by another invite.</gray>");
         }
+        invites.put(target.getUniqueId(), room.host);
         room.invited.add(target.getUniqueId());
         room.updatedAt = Instant.now().getEpochSecond();
         tell(target, "<gold>✉ Game invite!</gold> <yellow>" + escape(host.getName()) + "</yellow> invited you to "
@@ -96,9 +122,17 @@ public final class GameRoomManager {
             Player host = Bukkit.getPlayerExact(hostName);
             if (host != null) hostId = host.getUniqueId();
         }
+        accept(player, hostId);
+    }
+
+    public void accept(Player player, UUID hostId) {
+        expireOldRooms();
         Room room = hostId == null ? null : byHost.get(hostId);
         if (room == null || !room.invited.contains(player.getUniqueId())) {
             throw new IllegalStateException("<red>You don't have an active GameCraft invite.</red>");
+        }
+        if (roomFor(player.getUniqueId()) != null) {
+            throw new IllegalStateException("<red>Leave your current multiplayer room before joining another.</red>");
         }
         if (sessions.getPlayerSession(player.getUniqueId()).isPresent()) {
             throw new IllegalStateException("<red>Leave your current game before accepting an invite.</red>");
@@ -114,6 +148,55 @@ public final class GameRoomManager {
         room.updatedAt = Instant.now().getEpochSecond();
         tell(player, "<green>✓ You joined <yellow>" + playerName(room.host) + "</yellow>'s room.</green>");
         tell(Bukkit.getPlayer(room.host), "<aqua>✦ " + escape(player.getName()) + " joined!</aqua> <gray>("
+                + room.players.size() + "/" + room.capacity + ")</gray>");
+    }
+
+    public List<InviteView> pendingInvites(Player player) {
+        expireOldRooms();
+        UUID hostId = invites.get(player.getUniqueId());
+        Room room = hostId == null ? null : byHost.get(hostId);
+        Player host = hostId == null ? null : Bukkit.getPlayer(hostId);
+        if (room == null || host == null || !room.invited.contains(player.getUniqueId())) return List.of();
+        return List.of(new InviteView(hostId, host.getName(), room.gameId, room.players.size(), room.capacity));
+    }
+
+    public RoomView roomView(Player player) {
+        expireOldRooms();
+        Room room = byHost.get(player.getUniqueId());
+        boolean isHost = room != null;
+        if (room == null) {
+            room = byHost.values().stream()
+                    .filter(candidate -> candidate.players.contains(player.getUniqueId()))
+                    .findFirst().orElse(null);
+        }
+        return room == null ? null : new RoomView(room.host, room.gameId, room.players.size(),
+                room.capacity, isHost, room.teamMode);
+    }
+
+    public List<InviteCandidate> onlineInviteCandidates(Player host) {
+        Room room = requireHostRoom(host.getUniqueId());
+        return Bukkit.getOnlinePlayers().stream()
+                .filter(candidate -> !room.players.contains(candidate.getUniqueId()))
+                .filter(candidate -> !room.invited.contains(candidate.getUniqueId()))
+                .filter(candidate -> roomFor(candidate.getUniqueId()) == null)
+                .filter(candidate -> sessions.getPlayerSession(candidate.getUniqueId()).isEmpty())
+                .map(candidate -> new InviteCandidate(candidate.getUniqueId(), candidate.getName()))
+                .sorted(java.util.Comparator.comparing(InviteCandidate::name, String.CASE_INSENSITIVE_ORDER))
+                .toList();
+    }
+
+    public void leave(Player player) {
+        expireOldRooms();
+        Room room = byHost.values().stream()
+                .filter(candidate -> candidate.players.contains(player.getUniqueId()))
+                .findFirst().orElseThrow(() -> new IllegalStateException("<gray>You're not in a multiplayer room.</gray>"));
+        if (room.host.equals(player.getUniqueId())) {
+            throw new IllegalStateException("<yellow>Hosts should close their room with the cancel button.</yellow>");
+        }
+        room.players.remove(player.getUniqueId());
+        room.updatedAt = Instant.now().getEpochSecond();
+        tell(player, "<gray>You left the <yellow>" + title(room.gameId) + "</yellow> room.</gray>");
+        tell(Bukkit.getPlayer(room.host), "<yellow>" + escape(player.getName()) + " left your room.</yellow> <gray>("
                 + room.players.size() + "/" + room.capacity + ")</gray>");
     }
 
@@ -181,6 +264,12 @@ public final class GameRoomManager {
         if (room == null) throw new IllegalStateException("<yellow>Host a multiplayer room first with <gold>/gc play</gold>.</yellow>");
         room.updatedAt = Instant.now().getEpochSecond();
         return room;
+    }
+
+    private Room roomFor(UUID playerId) {
+        return byHost.values().stream()
+                .filter(room -> room.players.contains(playerId))
+                .findFirst().orElse(null);
     }
 
     private List<UUID> seatOrder(Room room) {

@@ -33,7 +33,7 @@ GameCraft targets Paper 1.20.x, 1.21.x, and the 26.x lines using public APIs and
 | `/gamecraft help` | Show commands and game-start syntax | none |
 | `/gamecraft status` | Show core/server version, loaded module count, and AI status | none |
 | `/gamecraft modules` | List configured and loaded modules | none |
-| `/gc play` | Open the chest menu to select a game, mode, player count, difficulty, and side/color | `gamecraft.use` |
+| `/gc play` | Open the chest menu to select a game, mode, player count, difficulty, and side/color; manage invites and your room | `gamecraft.use` |
 | `/gc invite <player>` | Invite an online player to your waiting room | `gamecraft.use` |
 | `/gc accept [host]` | Accept a pending room invitation | `gamecraft.use` |
 | `/gc start` | Start your room after all selected seats join | `gamecraft.use` |
@@ -43,10 +43,11 @@ GameCraft targets Paper 1.20.x, 1.21.x, and the 26.x lines using public APIs and
 | `/gamecraft sit` / `/gamecraft stand` | Sit in a nearby GameCraft chair or stand | none |
 | `/gc furniture chair [game]` | Place a chair above the targeted block | `gamecraft.admin` |
 | `/gc furniture table <game>` | Place that game's custom-sized textured 3D table | `gamecraft.admin` |
+| `/gc furniture give <game> [player]` | Give a placeable table item (no crafting recipe) | `gamecraft.admin` |
 | `/gamecraft enable <module-id>` / `disable <module-id>` | Enable/download or disable a module | `gamecraft.admin` |
 | `/gamecraft reload` | Reload core config and check the registry | `gamecraft.admin` |
 
-Difficulty values are `easy`, `medium`, `hard`, and `expert`. Each module decides how those settings affect its opponent or puzzle. Use the chest menu to pick the mode, player count, difficulty, and a side/color. A multiplayer host then invites friends with `/gc invite <player>` and starts once the selected room seats are full. The direct command form remains available for single player or computer matches, for example:
+Difficulty values are `easy`, `medium`, `hard`, and `expert`. Each module decides how those settings affect its opponent or puzzle. Use the chest menu to pick the mode, player count, difficulty, and a side/color. The `/gc play` menu also includes invitation and room/lobby entries, where hosts can invite online players, see seats, start, or cancel; invitees can accept or leave from the menus. Commands such as `/gc invite <player>` remain available. A host can start once the selected room seats are full. The direct command form remains available for single player or computer matches, for example:
 
 ```text
 /gamecraft play chess computer hard
@@ -55,13 +56,13 @@ Difficulty values are `easy`, `medium`, `hard`, and `expert`. Each module decide
 
 The computer seat count includes you: `monopoly computer medium 4` is one human and three bots. The multiplayer flow is room-based so invited players can choose whether to join before the match begins. Ludo offers a four-player 2v2 team option.
 
-`gamecraft.admin` defaults to operators. Furniture uses real table and stair blocks, with an invisible seat anchor for sitting. Right-click a table to open `/gc play`. Chairs can be right-clicked to sit on them; `/gc sit` is also available. `/gc play` uses a nearby table for the selected game within 16 blocks; if none is nearby, it places that game's table five blocks in front of the host. The client mod textures furniture between matches and draws active boards and pieces; only session members can make moves.
+`gamecraft.admin` defaults to operators. Furniture uses real table and stair blocks, with an invisible seat anchor for sitting. Tables are at most 3×3 blocks (UNO and Solitaire use 3×2). Right-click a table to open `/gc play`. Chairs can be right-clicked to sit on them; `/gc sit` is also available. `/gc play` uses a nearby table for the selected game within 16 blocks; if none is nearby, it places that game's table five blocks in front of the host. The client mod textures furniture between matches and draws active boards and pieces; only session members can make moves.
 
 ## In-world boards and client mod
 
 Game scenes use textured 3D models, boards, pieces, clickable board cells, and animated piece movement. The Fabric mod is required for active game views. Right-click a board square, card, or space to choose the move or option you want. Chest menus are only used to browse games and configure a room; they do not replace the in-world board during play.
 
-Place a matching table with `/gc furniture table uno`, `/gc furniture table chess`, and so on. Every game has a different footprint, top texture, and chair art. Players can sit around the table and start with `/gc play`; if they are near more than one table for that game, the nearest matching one is used.
+Place a matching table with `/gc furniture table uno`, `/gc furniture table chess`, and so on. To receive a placeable table item instead, use `/gc furniture give <game> [player]`, then right-click a block face with it. These table items are admin-issued and have no crafting recipes. Every game has a different footprint, top texture, and chair art. Players can sit around the table and start with `/gc play`; if they are near more than one table for that game, the nearest matching one is used.
 
 The client mod bundles the game models and textures, so gameplay does not depend on the optional server resource pack. To serve that pack for vanilla item appearances, set a public URL in `plugins/GameCraft/config.yml`; for example:
 

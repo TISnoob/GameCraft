@@ -88,9 +88,12 @@ public final class GameBoardRenderer {
                 double x = MathHelper.lerp(eased, motion.fromX(), motion.toX());
                 double y = MathHelper.lerp(eased, motion.fromY(), motion.toY());
                 double z = MathHelper.lerp(eased, motion.fromZ(), motion.toZ());
+                boolean tablePart = visual.key().equals("table") || visual.key().startsWith("table-leg-");
+                float layoutScale = tablePart ? 1.0f : Footprint.forGame(scene.game()).contentScale;
                 renderModel(client, context, matrices, consumers, visual.model(),
-                        x - camera.x, y - camera.y, z - camera.z,
-                        visual.scaleX(), visual.scaleY(), visual.scaleZ(), visual.yaw());
+                        scene.x() + (x - scene.x()) * layoutScale - camera.x, y - camera.y,
+                        scene.z() + (z - scene.z()) * layoutScale - camera.z,
+                        visual.scaleX() * layoutScale, visual.scaleY(), visual.scaleZ() * layoutScale, visual.yaw());
             }
             Set<String> previous = ACTIVE_VISUALS.put(scene.sessionId(), active);
             if (previous != null) previous.stream().filter(key -> !active.contains(key)).forEach(MOTIONS::remove);
@@ -492,6 +495,12 @@ public final class GameBoardRenderer {
 
     /** Uses a click on the solid table block as a board click, then sends only a listed legal action. */
     public static void click(GameSceneState scene, double x, double z) {
+        float scale = Footprint.forGame(scene.game()).contentScale;
+        clickLogical(scene, scene.x() + (x - scene.x()) / scale,
+                scene.z() + (z - scene.z()) / scale);
+    }
+
+    private static void clickLogical(GameSceneState scene, double x, double z) {
         String game = scene.game();
         if (game.equals("chess") || game.equals("checkers")) {
             int file = (int) Math.floor((x - (scene.x() - 2.25)) / 0.5625);
@@ -629,15 +638,17 @@ public final class GameBoardRenderer {
         } catch (NumberFormatException ignored) { return Double.MAX_VALUE; }
     }
 
-    private record Footprint(float width, float depth) {
+    private record Footprint(float width, float depth, float contentScale) {
         static Footprint forGame(String game) {
             return switch (game) {
-                case "chess", "checkers" -> new Footprint(6.0f, 6.0f);
-                case "ludo", "chinese-checkers", "monopoly" -> new Footprint(7, 7);
-                case "uno" -> new Footprint(6, 4);
-                case "solitaire" -> new Footprint(5, 4);
-                case "sudoku" -> new Footprint(5, 5);
-                default -> new Footprint(5, 5);
+                case "chess", "checkers" -> new Footprint(3.0f, 3.0f, 0.62f);
+                case "ludo" -> new Footprint(3.0f, 3.0f, 0.70f);
+                case "chinese-checkers" -> new Footprint(3.0f, 3.0f, 0.66f);
+                case "monopoly" -> new Footprint(3.0f, 3.0f, 0.55f);
+                case "uno" -> new Footprint(3.0f, 2.0f, 0.62f);
+                case "solitaire" -> new Footprint(3.0f, 2.0f, 0.70f);
+                case "sudoku" -> new Footprint(3.0f, 3.0f, 0.63f);
+                default -> new Footprint(3.0f, 3.0f, 0.62f);
             };
         }
     }
