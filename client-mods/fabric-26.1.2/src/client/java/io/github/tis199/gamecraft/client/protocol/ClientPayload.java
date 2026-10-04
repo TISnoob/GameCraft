@@ -1,18 +1,14 @@
 package io.github.tis199.gamecraft.client.protocol;
 
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 
-public record ClientPayload(String json) implements CustomPayload {
-    public static final Id<ClientPayload> ID = new Id<>(Identifier.of("gamecraft", "client"));
-    public static final PacketCodec<RegistryByteBuf, ClientPayload> CODEC = PacketCodec.of(
-            (payload, buf) -> buf.writeString(payload.json(), 4096),
-            buf -> new ClientPayload(buf.readString(4096)));
+public record ClientPayload(String json) implements CustomPacketPayload {
+    public static final Type<ClientPayload> ID = new Type<>(Identifier.fromNamespaceAndPath("gamecraft", "client"));
+    public static final StreamCodec<RegistryFriendlyByteBuf, ClientPayload> CODEC = StreamCodec.of(
+            (buf, payload) -> buf.writeUtf(payload.json()), buf -> new ClientPayload(buf.readUtf(4096)));
 
-    @Override
-    public Id<? extends CustomPayload> getId() {
-        return ID;
-    }
+    @Override public Type<? extends CustomPacketPayload> type() { return ID; }
 }

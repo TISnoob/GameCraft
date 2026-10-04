@@ -4,6 +4,8 @@ import io.github.tis199.gamecraft.client.GameCraftClient;
 import io.github.tis199.gamecraft.client.model.GameOption;
 import io.github.tis199.gamecraft.client.model.GameSceneState;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.Click;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -34,7 +36,10 @@ public final class UnoHandScreen extends Screen {
         this.renderBackground(context, mouseX, mouseY, delta);
         context.fill(0, 0, width, height, 0xD9101711);
         context.fill(10, 10, width - 10, height - 10, 0xE8283025);
-        context.drawBorder(10, 10, width - 20, height - 20, 0xFFB97A3D);
+        context.drawHorizontalLine(10, width - 10, 10, 0xFFB97A3D);
+        context.drawHorizontalLine(10, width - 10, height - 10, 0xFFB97A3D);
+        context.drawVerticalLine(10, 10, height - 10, 0xFFB97A3D);
+        context.drawVerticalLine(width - 10, 10, height - 10, 0xFFB97A3D);
         context.drawCenteredTextWithShadow(textRenderer, "UNO • Your cards", width / 2, 22, 0xFFFFD76A);
         GameOption status = scene.option("status");
         context.drawCenteredTextWithShadow(textRenderer,
@@ -60,7 +65,8 @@ public final class UnoHandScreen extends Screen {
             if (hovered) context.fill(x - 3, y - 3, x + cardWidth + 3, y + cardHeight + 3, 0xFFFFD76A);
             context.fill(x - 1, y - 1, x + cardWidth + 1, y + cardHeight + 1, 0xFF111111);
             Identifier texture = cardTexture(option.title());
-            context.drawTexture(texture, x, y, 0.0f, 0.0f, cardWidth, cardHeight, 64, 64);
+            context.drawTexture(RenderPipelines.GUI_TEXTURED, texture, x, y, 0.0f, 0.0f,
+                    cardWidth, cardHeight, 64, 64);
             if (!playable) context.fill(x, y, x + cardWidth, y + cardHeight, 0x66000000);
             context.drawCenteredTextWithShadow(textRenderer, shortLabel(option.title()), x + cardWidth / 2,
                     y + cardHeight + 5, playable ? 0xFFFFFFFF : 0xFF999999);
@@ -72,8 +78,10 @@ public final class UnoHandScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (button != 0) return super.mouseClicked(mouseX, mouseY, button);
+    public boolean mouseClicked(Click click, boolean doubleClick) {
+        double mouseX = click.x();
+        double mouseY = click.y();
+        if (click.button() != 0) return super.mouseClicked(click, doubleClick);
         int availableWidth = Math.max(1, width - 38);
         columns = Math.max(1, Math.min(8, availableWidth / 72));
         cardWidth = Math.max(28, Math.min(72, (availableWidth - (columns - 1) * 7) / columns));
@@ -94,7 +102,7 @@ public final class UnoHandScreen extends Screen {
             }
             return true;
         }
-        return super.mouseClicked(mouseX, mouseY, button);
+        return super.mouseClicked(click, doubleClick);
     }
 
     @Override

@@ -3,10 +3,12 @@ package io.github.tis199.gamecraft.client.screen;
 import io.github.tis199.gamecraft.client.GameCraftClient;
 import io.github.tis199.gamecraft.client.model.GameOption;
 import io.github.tis199.gamecraft.client.model.GameSceneState;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ public final class UnoHandScreen extends Screen {
     private int top;
 
     public UnoHandScreen(GameSceneState scene) {
-        super(Text.literal("UNO • Your hand"));
+        super(Component.literal("UNO • Your hand"));
         this.scene = scene;
         this.cards = new ArrayList<>(scene.options().stream()
                 .filter(option -> option.id().startsWith("play:") || option.id().startsWith("hand:"))
@@ -30,14 +32,14 @@ public final class UnoHandScreen extends Screen {
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context, mouseX, mouseY, delta);
+    public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
+        this.extractTransparentBackground(context);
         context.fill(0, 0, width, height, 0xD9101711);
         context.fill(10, 10, width - 10, height - 10, 0xE8283025);
-        context.drawBorder(10, 10, width - 20, height - 20, 0xFFB97A3D);
-        context.drawCenteredTextWithShadow(textRenderer, "UNO • Your cards", width / 2, 22, 0xFFFFD76A);
+        context.outline(10, 10, width - 20, height - 20, 0xFFB97A3D);
+        context.centeredText(font, "UNO • Your cards", width / 2, 22, 0xFFFFD76A);
         GameOption status = scene.option("status");
-        context.drawCenteredTextWithShadow(textRenderer,
+        context.centeredText(font,
                 status == null ? "Choose a playable card" : status.title(), width / 2, 38, 0xFFF4EFE5);
 
         int availableWidth = Math.max(1, width - 38);
@@ -60,20 +62,22 @@ public final class UnoHandScreen extends Screen {
             if (hovered) context.fill(x - 3, y - 3, x + cardWidth + 3, y + cardHeight + 3, 0xFFFFD76A);
             context.fill(x - 1, y - 1, x + cardWidth + 1, y + cardHeight + 1, 0xFF111111);
             Identifier texture = cardTexture(option.title());
-            context.drawTexture(texture, x, y, 0.0f, 0.0f, cardWidth, cardHeight, 64, 64);
+            context.blit(RenderPipelines.GUI_TEXTURED, texture, x, y, 0.0f, 0.0f, cardWidth, cardHeight, 64, 64);
             if (!playable) context.fill(x, y, x + cardWidth, y + cardHeight, 0x66000000);
-            context.drawCenteredTextWithShadow(textRenderer, shortLabel(option.title()), x + cardWidth / 2,
+            context.centeredText(font, shortLabel(option.title()), x + cardWidth / 2,
                     y + cardHeight + 5, playable ? 0xFFFFFFFF : 0xFF999999);
         }
         String footer = cards.isEmpty() ? "No cards in hand"
                 : "Click a bright card to play  •  Wheel to browse";
-        context.drawCenteredTextWithShadow(textRenderer, footer, width / 2, height - 27, 0xFFE7D9BE);
-        super.render(context, mouseX, mouseY, delta);
+        context.centeredText(font, footer, width / 2, height - 27, 0xFFE7D9BE);
+
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (button != 0) return super.mouseClicked(mouseX, mouseY, button);
+    public boolean mouseClicked(MouseButtonEvent click, boolean doubleClick) {
+        double mouseX = click.x();
+        double mouseY = click.y();
+        if (click.button() != 0) return super.mouseClicked(click, doubleClick);
         int availableWidth = Math.max(1, width - 38);
         columns = Math.max(1, Math.min(8, availableWidth / 72));
         cardWidth = Math.max(28, Math.min(72, (availableWidth - (columns - 1) * 7) / columns));
@@ -90,11 +94,11 @@ public final class UnoHandScreen extends Screen {
             GameOption option = cards.get(index);
             if (option.id().startsWith("play:")) {
                 GameCraftClient.sendAction(scene, option.id());
-                close();
+                onClose();
             }
             return true;
         }
-        return super.mouseClicked(mouseX, mouseY, button);
+        return super.mouseClicked(click, doubleClick);
     }
 
     @Override
@@ -105,7 +109,7 @@ public final class UnoHandScreen extends Screen {
     }
 
     @Override
-    public boolean shouldPause() { return false; }
+    public boolean isPauseScreen() { return false; }
 
     private static Identifier cardTexture(String title) {
         String label = title.replaceFirst("^(Play|Hold)\\s+", "").toUpperCase(java.util.Locale.ROOT)
@@ -124,7 +128,7 @@ public final class UnoHandScreen extends Screen {
             };
             model = color * 13 + rank;
         }
-        return Identifier.of("gamecraft", "textures/item/uno-card-" + model + ".png");
+        return Identifier.fromNamespaceAndPath("gamecraft", "textures/item/uno-card-" + model + ".png");
     }
 
     private static String shortLabel(String title) {

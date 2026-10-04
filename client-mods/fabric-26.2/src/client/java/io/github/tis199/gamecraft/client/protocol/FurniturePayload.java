@@ -1,16 +1,14 @@
 package io.github.tis199.gamecraft.client.protocol;
 
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 
-public record FurniturePayload(String json) implements CustomPayload {
-    public static final Id<FurniturePayload> ID = new Id<>(Identifier.of("gamecraft", "furniture"));
-    public static final PacketCodec<RegistryByteBuf, FurniturePayload> CODEC = PacketCodec.of(
-            (payload, buf) -> buf.writeString(payload.json(), 32767),
-            buf -> new FurniturePayload(buf.readString(32767)));
+public record FurniturePayload(String json) implements CustomPacketPayload {
+    public static final Type<FurniturePayload> ID = new Type<>(Identifier.fromNamespaceAndPath("gamecraft", "furniture"));
+    public static final StreamCodec<RegistryFriendlyByteBuf, FurniturePayload> CODEC = StreamCodec.of(
+            (buf, payload) -> buf.writeUtf(payload.json()), buf -> new FurniturePayload(buf.readUtf(32767)));
 
-    @Override
-    public Id<? extends CustomPayload> getId() { return ID; }
+    @Override public Type<? extends CustomPacketPayload> type() { return ID; }
 }

@@ -31,7 +31,7 @@ public final class UnoHandScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context, mouseX, mouseY, delta);
+        this.renderBackground(context);
         context.fill(0, 0, width, height, 0xD9101711);
         context.fill(10, 10, width - 10, height - 10, 0xE8283025);
         context.drawBorder(10, 10, width - 20, height - 20, 0xFFB97A3D);
@@ -98,9 +98,9 @@ public final class UnoHandScreen extends Screen {
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
         int step = Math.max(1, columns);
-        firstVisible = Math.max(0, Math.min(Math.max(0, cards.size() - step), firstVisible - (int) Math.signum(verticalAmount) * step));
+        firstVisible = Math.max(0, Math.min(Math.max(0, cards.size() - step), firstVisible - (int) Math.signum(amount) * step));
         return true;
     }
 

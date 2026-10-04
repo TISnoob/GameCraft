@@ -1,4 +1,4 @@
-plugins { id 'fabric-loom' version '1.11-SNAPSHOT' }
+plugins { id 'fabric-loom' version '1.14.10' }
 
 version = "${project.mod_version}+${project.minecraft_version}"
 group = project.maven_group

@@ -4,19 +4,19 @@ import io.github.tis199.gamecraft.client.GameCraftClient;
 import io.github.tis199.gamecraft.client.model.FurnitureState;
 import io.github.tis199.gamecraft.client.model.GameOption;
 import io.github.tis199.gamecraft.client.model.GameSceneState;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.json.ModelTransformationMode;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderContext;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.ItemDisplayContext;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,21 +34,19 @@ public final class GameBoardRenderer {
     private static final Pattern BOARD_ROW = Pattern.compile("\\|([^|]+)\\|");
     private static final Pattern SQUARE = Pattern.compile("(?i)([a-h][1-8])");
     private static final Pattern HEX = Pattern.compile("(-?\\d+),(-?\\d+)");
-    private static final Map<Identifier, BakedModel> MODELS = new HashMap<>();
     private static final Map<String, Motion> MOTIONS = new HashMap<>();
     private static final Map<UUID, Set<String>> ACTIVE_VISUALS = new HashMap<>();
 
     private GameBoardRenderer() { }
 
-    public static void render(WorldRenderContext context) {
-        MatrixStack matrices = context.matrixStack();
-        VertexConsumerProvider consumers = context.consumers();
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (matrices == null || consumers == null || client.world == null) return;
-        Vec3d camera = context.camera().getPos();
+    public static void render(LevelRenderContext context) {
+        PoseStack matrices = context.poseStack();
+        Minecraft client = Minecraft.getInstance();
+        if (matrices == null || context.submitNodeCollector() == null || client.level == null) return;
+        Vec3 camera = context.levelState().cameraRenderState.pos;
         long now = System.currentTimeMillis();
         for (FurnitureState furniture : GameCraftClient.furniture()) {
-            if (!furniture.world().equals(client.world.getRegistryKey().getValue().toString())) continue;
+            if (!furniture.world().equals(client.level.dimension().identifier().toString())) continue;
             double dx = furniture.x() - camera.x;
             double dy = furniture.y() - camera.y;
             double dz = furniture.z() - camera.z;
@@ -60,7 +58,7 @@ public final class GameBoardRenderer {
             }
         }
         for (GameSceneState scene : GameCraftClient.scenes()) {
-            if (!scene.world().equals(client.world.getRegistryKey().getValue().toString())) continue;
+            if (!scene.world().equals(client.level.dimension().identifier().toString())) continue;
             double dx = scene.x() - camera.x;
             double dy = scene.y() - camera.y;
             double dz = scene.z() - camera.z;
@@ -73,10 +71,10 @@ public final class GameBoardRenderer {
                 Motion motion = motion(key, visual.x(), visual.y(), visual.z(), now);
                 double progress = Math.min(1, Math.max(0, (now - motion.startedAt()) / 240.0));
                 double eased = progress * progress * (3 - 2 * progress);
-                double x = MathHelper.lerp(eased, motion.fromX(), motion.toX());
-                double y = MathHelper.lerp(eased, motion.fromY(), motion.toY());
-                double z = MathHelper.lerp(eased, motion.fromZ(), motion.toZ());
-                renderModel(client, context, matrices, consumers, visual.model(),
+                double x = Mth.lerp(eased, motion.fromX(), motion.toX());
+                double y = Mth.lerp(eased, motion.fromY(), motion.toY());
+                double z = Mth.lerp(eased, motion.fromZ(), motion.toZ());
+                renderModel(client, context, matrices, visual.model(),
                         x - camera.x, y - camera.y, z - camera.z,
                         visual.scaleX(), visual.scaleY(), visual.scaleZ(), visual.yaw());
             }
@@ -95,31 +93,32 @@ public final class GameBoardRenderer {
         if (Math.abs(previous.toX() - x) + Math.abs(previous.toY() - y) + Math.abs(previous.toZ() - z) > 0.025) {
             double progress = Math.min(1, Math.max(0, (now - previous.startedAt()) / 240.0));
             double eased = progress * progress * (3 - 2 * progress);
-            double currentX = MathHelper.lerp(eased, previous.fromX(), previous.toX());
-            double currentY = MathHelper.lerp(eased, previous.fromY(), previous.toY());
-            double currentZ = MathHelper.lerp(eased, previous.fromZ(), previous.toZ());
+            double currentX = Mth.lerp(eased, previous.fromX(), previous.toX());
+            double currentY = Mth.lerp(eased, previous.fromY(), previous.toY());
+            double currentZ = Mth.lerp(eased, previous.fromZ(), previous.toZ());
             previous = new Motion(currentX, currentY, currentZ, x, y, z, now);
             MOTIONS.put(key, previous);
         }
         return previous;
     }
 
-    private static void renderModel(MinecraftClient client, WorldRenderContext context, MatrixStack matrices,
-                                    VertexConsumerProvider consumers, String name,
+    private static void renderModel(Minecraft client, LevelRenderContext context, PoseStack matrices,
+                                    String name,
                                     double x, double y, double z,
                                     float sx, float sy, float sz, float yaw) {
-        Identifier id = Identifier.of("gamecraft", "item/" + name);
-        BakedModel model = MODELS.computeIfAbsent(id, key -> client.getBakedModelManager().getModel(key));
-        matrices.push();
+        Identifier id = Identifier.fromNamespaceAndPath("gamecraft", "item/" + name);
+        matrices.pushPose();
         matrices.translate(x, y, z);
-        matrices.multiply(net.minecraft.util.math.RotationAxis.POSITIVE_Y.rotation(yaw));
+        matrices.rotate(com.mojang.math.Axis.YP, yaw);
         matrices.scale(sx, sy, sz);
         matrices.translate(-0.5, 0, -0.5);
         ItemStack carrier = new ItemStack(Items.PAPER);
-        ItemRenderer renderer = client.getItemRenderer();
-        renderer.renderItem(carrier, ModelTransformationMode.FIXED, false, matrices, consumers,
-                0x00F000F0, OverlayTexture.DEFAULT_UV, model);
-        matrices.pop();
+        carrier.set(DataComponents.ITEM_MODEL, id);
+        ItemStackRenderState state = new ItemStackRenderState();
+        client.getItemModelResolver().updateForTopItem(state, carrier, ItemDisplayContext.FIXED,
+                client.level, null, 0);
+        state.submit(matrices, context.submitNodeCollector(), 0x00F000F0, 0, -1);
+        matrices.popPose();
     }
 
     private static boolean hasActiveScene(FurnitureState furniture) {
@@ -128,29 +127,28 @@ public final class GameBoardRenderer {
                 && Math.hypot(scene.x() - furniture.x(), scene.z() - furniture.z()) < 1.0);
     }
 
-    private static void renderTable(WorldRenderContext context, FurnitureState table, Vec3d camera) {
-        MinecraftClient client = MinecraftClient.getInstance();
-        MatrixStack matrices = context.matrixStack();
-        VertexConsumerProvider consumers = context.consumers();
+    private static void renderTable(LevelRenderContext context, FurnitureState table, Vec3 camera) {
+        Minecraft client = Minecraft.getInstance();
+        PoseStack matrices = context.poseStack();
         float width = table.width();
         float depth = table.depth();
         double x = table.x() - camera.x;
         double y = table.y() - camera.y;
         double z = table.z() - camera.z;
-        renderModel(client, context, matrices, consumers, "table-" + table.game(),
+        renderModel(client, context, matrices, "table-" + table.game(),
                 x, y - 0.5, z, width, 1.0f, depth, 0);
         for (int dx : new int[]{-1, 1}) {
             for (int dz : new int[]{-1, 1}) {
-                renderModel(client, context, matrices, consumers, "table-leg",
+                renderModel(client, context, matrices, "table-leg",
                         x + dx * (width / 2 - 0.18), y - 0.9, z + dz * (depth / 2 - 0.18),
                         0.18f, 0.9f, 0.18f, 0);
             }
         }
     }
 
-    private static void renderChair(WorldRenderContext context, FurnitureState chair, Vec3d camera) {
-        MinecraftClient client = MinecraftClient.getInstance();
-        renderModel(client, context, context.matrixStack(), context.consumers(),
+    private static void renderChair(LevelRenderContext context, FurnitureState chair, Vec3 camera) {
+        Minecraft client = Minecraft.getInstance();
+        renderModel(client, context, context.poseStack(),
                 "chair-" + chairGame(chair), chair.x() + 0.5 - camera.x,
                 chair.y() - camera.y, chair.z() + 0.5 - camera.z,
                 0.9f, 1.0f, 0.9f, 0);

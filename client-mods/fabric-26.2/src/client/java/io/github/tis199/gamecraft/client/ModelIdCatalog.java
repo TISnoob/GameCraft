@@ -1,6 +1,6 @@
 package io.github.tis199.gamecraft.client;
 
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 
@@ -23,9 +23,9 @@ public final class ModelIdCatalog {
 
     public static List<Identifier> all() {
         java.util.ArrayList<Identifier> result = new java.util.ArrayList<>(MODEL_NAMES.length + 106);
-        for (String name : MODEL_NAMES) result.add(Identifier.of("gamecraft", "item/" + name));
-        for (int card = 0; card < 54; card++) result.add(Identifier.of("gamecraft", "item/uno-card-" + card));
-        for (int card = 0; card < 52; card++) result.add(Identifier.of("gamecraft", "item/solitaire-card-" + card));
+        for (String name : MODEL_NAMES) result.add(Identifier.fromNamespaceAndPath("gamecraft", "item/" + name));
+        for (int card = 0; card < 54; card++) result.add(Identifier.fromNamespaceAndPath("gamecraft", "item/uno-card-" + card));
+        for (int card = 0; card < 52; card++) result.add(Identifier.fromNamespaceAndPath("gamecraft", "item/solitaire-card-" + card));
         return List.copyOf(result);
     }
 }

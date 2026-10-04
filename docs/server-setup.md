@@ -5,7 +5,7 @@
 1. Build the release with `./gradlew assembleDistribution`, or obtain the desired artifacts.
 2. Copy `GameCraft.jar` into the Paper server's `plugins/` directory and start the server once.
 3. Copy each selected game JAR into `plugins/GameCraft/modules/`.
-4. On every Java player's Minecraft 1.21.1 client, install Fabric Loader and Fabric API, then place `gamecraft-client-1.21.1-<version>.jar` in the client's `mods/` folder. GameCraft checks for the mod before allowing a player into a match.
+4. On every Java player's client, install Fabric Loader and Fabric API for their Minecraft version and place the matching `gamecraft-client-<minecraft-version>-<version>.jar` in the client's `mods/` folder. Builds are provided for 1.20.1, 1.21.1, 1.21.11, 26.1.2, 26.2, and 26.3. GameCraft checks for the mod before allowing a player into a match.
 5. Add the selected IDs to `modules.enabled-games` in `plugins/GameCraft/config.yml`:
 
    ```yaml
@@ -84,7 +84,7 @@ The standalone ZIPs remain available for servers with external pack hosting:
 - `gamecraft-java-modern.zip` for Java 1.21.4 and later clients, including 26.x.
 - `gamecraft-<game>-java-legacy.zip` and `gamecraft-<game>-java-modern.zip` for individual game packs.
 
-`gamecraft-java-universal.zip` contains both legacy overrides and modern item definitions for versions from 1.20 through 26.3. It only provides optional vanilla item appearances; the custom gameplay renderer currently targets Fabric 1.21.1. Bedrock custom item mappings are still separate work; do not force the Java pack for a Geyser audience until its Bedrock pack is configured and verified.
+`gamecraft-java-universal.zip` contains both legacy overrides and modern item definitions for versions from 1.20 through 26.3. It only provides optional vanilla item appearances; active gameplay still requires the matching Fabric client mod. Bedrock custom item mappings are still separate work; do not force the Java pack for a Geyser audience until its Bedrock pack is configured and verified.
 
 ## Chess engine setup
 
@@ -123,7 +123,7 @@ PlaceholderAPI is optional. If installed, the core provides `%gamecraft_modules_
 
 ## Current platform limits
 
-- Java gameplay requires the Fabric client mod. The current mod artifact targets Minecraft 1.21.1; separate client builds for the other supported server versions are not ready. The Geyser extension is a scaffold; Bedrock custom-item mapping, Forms, and PE-specific menus are not ready.
+- Java gameplay requires the Fabric client mod. Build targets are Minecraft 1.20.1, 1.21.1, 1.21.11, 26.1.2, 26.2, and 26.3. Client support is tied to the listed targets; a Paper server line accepting a patch version does not by itself guarantee the client mod works on that patch. The Geyser extension is a scaffold; Bedrock custom-item mapping, Forms, and PE-specific menus are not ready.
 - Velocity and BungeeCord artifacts are scaffolds and do not provide usable proxy routing yet.
 - Optional Java packs include textured 3D game models. The Bedrock pack is still a starter output.
 - The exact Paper/Folia version range has not been live-server verified as part of this build.

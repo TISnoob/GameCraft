@@ -4,7 +4,7 @@ GameCraft is a lobby-games platform for Paper and Folia servers. The core provid
 
 The repository currently contains separate modules for Chess, Ludo, Chinese Checkers, Checkers, Monopoly, UNO, Solitaire, and Sudoku. The core JAR does not embed those games. The distribution build produces one JAR per game alongside the core and companion artifacts.
 
-In-world gameplay uses the required Fabric client mod for Minecraft Java 1.21.1. It bundles the board textures and detailed pieces, draws the game on physical tables, handles clicks, animates moves, and opens the UNO hand screen. Optional Java resource packs provide vanilla item appearances for other client versions; they do not replace the gameplay mod.
+In-world gameplay uses a required Fabric client mod. Separate builds target Minecraft Java 1.20.1, 1.21.1, 1.21.11, 26.1.2, 26.2, and 26.3. Each mod bundles game furniture and piece models, board textures, click handling, move animation, and the UNO hand screen. Install the build matching the player's Minecraft version; a server resource pack does not replace the mod.
 
 ## Build
 
@@ -31,7 +31,7 @@ Artifacts are copied to `build/distributions/`. For installing a game, see [the 
 - `games/` — separately built game modules and shared game code
 - `proxy-velocity/`, `proxy-bungeecord/`, `geyser-addon/` — companion project scaffolds
 - `resource-packs/` — starter Java and Bedrock pack projects
-- `client-mods/fabric-1.21.1/` — client renderer, board interaction, and bundled 3D assets
+- `client-mods/fabric-*/` — version-specific Fabric gameplay mods and bundled 3D assets
 - `modules/manifest.json` — release registry for downloadable game modules
 
 Chess uses Chesslib for legal moves and supports Stockfish 16 through UCI. Stockfish is not bundled; the server owner installs an executable or configures a verified HTTPS download. The other modules currently provide their own rules and lightweight computer-player strategies. See the developer guide for each game's current scope and known ruleset limits.

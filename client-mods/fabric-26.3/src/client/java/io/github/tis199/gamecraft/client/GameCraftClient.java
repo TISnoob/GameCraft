@@ -10,16 +10,15 @@ import io.github.tis199.gamecraft.client.protocol.ScenePayload;
 import io.github.tis199.gamecraft.client.render.GameBoardRenderer;
 import io.github.tis199.gamecraft.client.screen.UnoHandScreen;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.resources.Identifier;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
@@ -35,10 +34,9 @@ public final class GameCraftClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        PayloadTypeRegistry.playS2C().register(ScenePayload.ID, ScenePayload.CODEC);
-        PayloadTypeRegistry.playS2C().register(FurniturePayload.ID, FurniturePayload.CODEC);
-        PayloadTypeRegistry.playC2S().register(ClientPayload.ID, ClientPayload.CODEC);
-        ModelLoadingPlugin.register(context -> context.addModels(ModelIdCatalog.all()));
+        PayloadTypeRegistry.clientboundPlay().register(ScenePayload.ID, ScenePayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(FurniturePayload.ID, FurniturePayload.CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(ClientPayload.ID, ClientPayload.CODEC);
 
         ClientPlayNetworking.registerGlobalReceiver(ScenePayload.ID, (payload, context) ->
                 accept(payload.json(), context.client()));
@@ -49,15 +47,14 @@ public final class GameCraftClient implements ClientModInitializer {
             FURNITURE.clear();
             sendHello();
         });
-        WorldRenderEvents.AFTER_ENTITIES.register(GameBoardRenderer::render);
+        LevelRenderEvents.AFTER_TRANSLUCENT_TERRAIN.register(GameBoardRenderer::render);
         UseBlockCallback.EVENT.register((player, world, hand, hit) -> {
-            if (!world.isClient() || hand != net.minecraft.util.Hand.MAIN_HAND) return ActionResult.PASS;
-            MinecraftClient client = MinecraftClient.getInstance();
-            if (client.currentScreen != null) return ActionResult.PASS;
-            GameSceneState scene = nearestScene(world.getRegistryKey().getValue().toString(), hit.getPos().x, hit.getPos().z);
-            if (scene == null) return ActionResult.PASS;
-            GameBoardRenderer.click(scene, hit.getPos().x, hit.getPos().z);
-            return ActionResult.SUCCESS;
+            if (!world.isClientSide() || hand != net.minecraft.world.InteractionHand.MAIN_HAND) return InteractionResult.PASS;
+            Minecraft client = Minecraft.getInstance();
+            GameSceneState scene = nearestScene(world.dimension().identifier().toString(), hit.getLocation().x, hit.getLocation().z);
+            if (scene == null) return InteractionResult.PASS;
+            GameBoardRenderer.click(scene, hit.getLocation().x, hit.getLocation().z);
+            return InteractionResult.SUCCESS;
         });
     }
 
@@ -103,7 +100,7 @@ public final class GameCraftClient implements ClientModInitializer {
         return packet;
     }
 
-    private static void accept(String json, MinecraftClient client) {
+    private static void accept(String json, Minecraft client) {
         try {
             JsonObject packet = JsonParser.parseString(json).getAsJsonObject();
             if (packet.get("protocol").getAsInt() != PROTOCOL) return;
@@ -117,7 +114,7 @@ public final class GameCraftClient implements ClientModInitializer {
                 case "open_hand" -> {
                     GameSceneState scene = GameSceneState.parse(json);
                     SCENES.put(scene.sessionId(), scene);
-                    client.execute(() -> client.setScreen(new UnoHandScreen(scene)));
+                    client.execute(() -> client.setScreenAndShow(new UnoHandScreen(scene)));
                 }
                 default -> { }
             }

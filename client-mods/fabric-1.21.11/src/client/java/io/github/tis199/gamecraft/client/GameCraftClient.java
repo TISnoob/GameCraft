@@ -10,10 +10,9 @@ import io.github.tis199.gamecraft.client.protocol.ScenePayload;
 import io.github.tis199.gamecraft.client.render.GameBoardRenderer;
 import io.github.tis199.gamecraft.client.screen.UnoHandScreen;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.world.WorldRenderEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.client.MinecraftClient;
@@ -38,8 +37,6 @@ public final class GameCraftClient implements ClientModInitializer {
         PayloadTypeRegistry.playS2C().register(ScenePayload.ID, ScenePayload.CODEC);
         PayloadTypeRegistry.playS2C().register(FurniturePayload.ID, FurniturePayload.CODEC);
         PayloadTypeRegistry.playC2S().register(ClientPayload.ID, ClientPayload.CODEC);
-        ModelLoadingPlugin.register(context -> context.addModels(ModelIdCatalog.all()));
-
         ClientPlayNetworking.registerGlobalReceiver(ScenePayload.ID, (payload, context) ->
                 accept(payload.json(), context.client()));
         ClientPlayNetworking.registerGlobalReceiver(FurniturePayload.ID, (payload, context) ->

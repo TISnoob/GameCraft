@@ -15,7 +15,7 @@
 This creates separate artifacts in `build/distributions/`:
 
 - `GameCraft.jar` — Paper/Folia core.
-- `gamecraft-client-1.21.1-<version>.jar` — required Fabric client mod with bundled board/piece textures, click handling, movement animation, and the UNO hand screen. It targets Minecraft Java 1.21.1.
+- `gamecraft-client-<minecraft-version>-<version>.jar` — required Fabric client mod, built separately for Minecraft Java 1.20.1, 1.21.1, 1.21.11, 26.1.2, 26.2, and 26.3. Each bundles board/piece textures, click handling, movement animation, and the UNO hand screen. Clients must install the matching build.
 - `gamecraft-api-<version>.jar` — compile-time API for module developers; do not put it in the server's `plugins/` directory.
 - `chess.jar`, `ludo.jar`, `chinese-checkers.jar`, `checkers.jar`, `monopoly.jar`, `uno.jar`, `solitaire.jar`, `sudoku.jar` — separate, shaded game modules. These JARs include their runtime game libraries where needed, but not duplicate GameCraft API classes.
 - `gc-velocity.jar`, `gc-bungeecord.jar`, and `gc-geyser-addon.jar` — project scaffolds. They are not yet usable proxy plugins or a Forms bridge.
@@ -42,7 +42,13 @@ The original per-project outputs remain under each project's `build/libs/` direc
    ```
 
 4. Restart. GameCraft copies module defaults to `plugins/GameCraft/games/<id>.yml` and the module is ready to use.
-5. Each Java player installs Fabric Loader and Fabric API for Minecraft 1.21.1, then puts `gamecraft-client-1.21.1-<version>.jar` in the local `.minecraft/mods/` folder.
+5. Each Java player installs Fabric Loader and Fabric API for their Minecraft version, then puts the matching `gamecraft-client-<minecraft-version>-<version>.jar` in the local `.minecraft/mods/` folder. For example, use `gamecraft-client-26.3-<version>.jar` on Minecraft 26.3.
+
+To build just the client mods and collect the JARs in `build/client-mods/`, run:
+
+```sh
+./gradlew assembleClientMods
+```
 
 Each game module is optional and independent. Modules installed this way are loaded from the local module directory; the GitHub manifest is for downloading published modules and does not need to contain locally built modules.
 
@@ -62,7 +68,12 @@ Each game module is optional and independent. Modules installed this way are loa
 ./gradlew :proxy-velocity:jar
 ./gradlew :proxy-bungeecord:jar
 ./gradlew :geyser-addon:jar
+./gradlew :client-mods:fabric-1.20.1:remapJar
 ./gradlew :client-mods:fabric-1.21.1:remapJar
+./gradlew :client-mods:fabric-1.21.11:remapJar
+./gradlew :client-mods:fabric-26.1.2:jar
+./gradlew :client-mods:fabric-26.2:jar
+./gradlew :client-mods:fabric-26.3:jar
 ./gradlew :resource-packs:buildPacks
 ```
 

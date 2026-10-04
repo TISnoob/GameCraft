@@ -4,9 +4,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.github.tis199.gamecraft.client.model.GameSceneState;
 import io.github.tis199.gamecraft.client.model.FurnitureState;
-import io.github.tis199.gamecraft.client.protocol.ClientPayload;
-import io.github.tis199.gamecraft.client.protocol.FurniturePayload;
-import io.github.tis199.gamecraft.client.protocol.ScenePayload;
 import io.github.tis199.gamecraft.client.render.GameBoardRenderer;
 import io.github.tis199.gamecraft.client.screen.UnoHandScreen;
 import net.fabricmc.api.ClientModInitializer;
@@ -15,13 +12,12 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.network.packet.CustomPayload;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Collection;
 import java.util.List;
@@ -30,20 +26,20 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class GameCraftClient implements ClientModInitializer {
     public static final int PROTOCOL = 1;
+    private static final Identifier CLIENT_CHANNEL = Identifier.of("gamecraft", "client");
+    private static final Identifier SCENE_CHANNEL = Identifier.of("gamecraft", "scene");
+    private static final Identifier FURNITURE_CHANNEL = Identifier.of("gamecraft", "furniture");
     private static final Map<UUID, GameSceneState> SCENES = new ConcurrentHashMap<>();
     private static final Map<UUID, FurnitureState> FURNITURE = new ConcurrentHashMap<>();
 
     @Override
     public void onInitializeClient() {
-        PayloadTypeRegistry.playS2C().register(ScenePayload.ID, ScenePayload.CODEC);
-        PayloadTypeRegistry.playS2C().register(FurniturePayload.ID, FurniturePayload.CODEC);
-        PayloadTypeRegistry.playC2S().register(ClientPayload.ID, ClientPayload.CODEC);
         ModelLoadingPlugin.register(context -> context.addModels(ModelIdCatalog.all()));
 
-        ClientPlayNetworking.registerGlobalReceiver(ScenePayload.ID, (payload, context) ->
-                accept(payload.json(), context.client()));
-        ClientPlayNetworking.registerGlobalReceiver(FurniturePayload.ID, (payload, context) ->
-                acceptFurniture(payload.json()));
+        ClientPlayNetworking.registerGlobalReceiver(SCENE_CHANNEL,
+                (client, handler, buffer, responseSender) -> accept(buffer.readString(32767), client));
+        ClientPlayNetworking.registerGlobalReceiver(FURNITURE_CHANNEL,
+                (client, handler, buffer, responseSender) -> acceptFurniture(buffer.readString(32767)));
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
             SCENES.clear();
             FURNITURE.clear();
@@ -82,18 +78,24 @@ public final class GameCraftClient implements ClientModInitializer {
         packet.addProperty("session", scene.sessionId().toString());
         packet.addProperty("actionType", scene.actionType());
         packet.addProperty("choice", choice);
-        ClientPlayNetworking.send(new ClientPayload(packet.toString()));
+        send(CLIENT_CHANNEL, packet.toString());
     }
 
     public static void requestHand(GameSceneState scene) {
         JsonObject packet = base("open_hand");
         packet.addProperty("session", scene.sessionId().toString());
-        ClientPlayNetworking.send(new ClientPayload(packet.toString()));
+        send(CLIENT_CHANNEL, packet.toString());
     }
 
     private static void sendHello() {
         JsonObject packet = base("hello");
-        ClientPlayNetworking.send(new ClientPayload(packet.toString()));
+        send(CLIENT_CHANNEL, packet.toString());
+    }
+
+    private static void send(Identifier channel, String json) {
+        PacketByteBuf buffer = PacketByteBufs.create();
+        buffer.writeString(json);
+        ClientPlayNetworking.send(channel, buffer);
     }
 
     private static JsonObject base(String kind) {

@@ -60,6 +60,23 @@ val installableArtifacts = listOf(
     ":client-mods:fabric-26.3:jar",
 )
 
+val clientModTargets = listOf("1.20.1", "1.21.1", "1.21.11", "26.1.2", "26.2", "26.3")
+val clientModTasks = clientModTargets.map { mc ->
+    if (mc.startsWith("26.")) ":client-mods:fabric-$mc:jar" else ":client-mods:fabric-$mc:remapJar"
+}
+
+tasks.register<Sync>("assembleClientMods") {
+    group = "build"
+    description = "Builds all version-specific GameCraft Fabric client mods into build/client-mods."
+    dependsOn(clientModTasks)
+    into(layout.buildDirectory.dir("client-mods"))
+    clientModTargets.forEach { mc ->
+        from(project(":client-mods:fabric-$mc").layout.buildDirectory.dir("libs")) {
+            include("gamecraft-client-$mc-*.jar")
+        }
+    }
+}
+
 tasks.register<Sync>("assembleDistribution") {
     group = "distribution"
     description = "Builds the GameCraft core, proxy companions, Geyser extension, developer API, and resource packs."
@@ -72,7 +89,7 @@ tasks.register<Sync>("assembleDistribution") {
     from(project(":proxy-velocity").layout.buildDirectory.file("libs/gc-velocity.jar"))
     from(project(":proxy-bungeecord").layout.buildDirectory.file("libs/gc-bungeecord.jar"))
     from(project(":geyser-addon").layout.buildDirectory.file("libs/gc-geyser-addon.jar"))
-    listOf("1.20.1", "1.21.1", "1.21.11", "26.1.2", "26.2", "26.3").forEach { mc ->
+    clientModTargets.forEach { mc ->
         from(project(":client-mods:fabric-$mc").layout.buildDirectory.dir("libs")) {
             include("gamecraft-client-$mc-*.jar")
         }
