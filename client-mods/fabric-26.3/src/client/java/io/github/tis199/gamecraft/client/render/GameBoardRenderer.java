@@ -117,7 +117,7 @@ public final class GameBoardRenderer {
                                     String name,
                                     double x, double y, double z,
                                     float sx, float sy, float sz, float yaw) {
-        Identifier id = Identifier.fromNamespaceAndPath("gamecraft", "item/" + name);
+        Identifier id = Identifier.fromNamespaceAndPath("gamecraft", name);
         matrices.pushPose();
         matrices.translate(x, y, z);
         matrices.rotate(com.mojang.math.Axis.YP, yaw);

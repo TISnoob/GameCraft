@@ -23,7 +23,7 @@ public final class ModelIdCatalog {
 
     public static List<Identifier> all() {
         java.util.ArrayList<Identifier> result = new java.util.ArrayList<>(MODEL_NAMES.length + 106);
-        for (String name : MODEL_NAMES) result.add(Identifier.fromNamespaceAndPath("gamecraft", "item/" + name));
+        for (String name : MODEL_NAMES) result.add(Identifier.fromNamespaceAndPath("gamecraft", name));
         for (int card = 0; card < 54; card++) result.add(Identifier.fromNamespaceAndPath("gamecraft", "item/uno-card-" + card));
         for (int card = 0; card < 52; card++) result.add(Identifier.fromNamespaceAndPath("gamecraft", "item/solitaire-card-" + card));
         return List.copyOf(result);

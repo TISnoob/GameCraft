@@ -21,11 +21,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public final class GameCraftPlugin extends JavaPlugin {
-    /**
-     * Replace this with GameCraft's official numeric bStats plugin id once bStats registration exists.
-     * The repository contains no registered id, so zero deliberately keeps metrics disabled rather than
-     * sending this plugin's data to an unrelated bStats project.
-     */
+    /** GameCraft's registered bStats project ID. */
     private static final int BSTATS_PLUGIN_ID = 34497;
 
     private ExecutorService ioExecutor;
@@ -124,7 +120,7 @@ public final class GameCraftPlugin extends JavaPlugin {
 
     private void startMetrics() {
         if (BSTATS_PLUGIN_ID <= 0) {
-            getLogger().info("bStats support is packaged but disabled until the official GameCraft bStats plugin ID is configured.");
+            getLogger().warning("bStats is disabled because the configured GameCraft project ID is invalid.");
             return;
         }
         try {

@@ -117,7 +117,7 @@ public final class GameBoardRenderer {
                                     String name,
                                     double x, double y, double z,
                                     float sx, float sy, float sz, float yaw) {
-        Identifier id = Identifier.of("gamecraft", "item/" + name);
+        Identifier id = Identifier.of("gamecraft", name);
         matrices.push();
         matrices.translate(x, y, z);
         matrices.multiply(net.minecraft.util.math.RotationAxis.POSITIVE_Y.rotation(yaw));
